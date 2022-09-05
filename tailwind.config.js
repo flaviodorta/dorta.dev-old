@@ -8,6 +8,11 @@ module.exports = {
     extend: {
       colors: {
         layout: '#121212',
+        primary: '#ED0C32',
+      },
+      fontFamily: {
+        anton: ['Anton', 'sans-serif'],
+        montserrat: ['Montserrat', 'sans-serif'],
       },
     },
   },
