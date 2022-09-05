@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .sidebar {
+    @apply absolute top-0 right-0 bottom-0 w-60 md:w-96;
+  }
+
+  .sidebar--background {
+    @apply absolute top-0 right-0 bottom-0 w-60 md:w-96 bg-red-700;
+  }
+
+  .sidebar--list {
+    @apply absolute p-5 top-24 w-48;
+  }
+
+  .sidebar--list-item {
+    @apply flex items-center mb-5 space-x-6 cursor-pointer;
+  }
+}

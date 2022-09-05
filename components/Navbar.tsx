@@ -1,25 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Logo from '../public/logo.svg';
-import { motion, Variants } from 'framer-motion';
-
-const sidebarVariants: Variants = {
-  open: {
-    clipPath: 'circle(1000px at 18px 18px)',
-    transition: {
-      duration: 0.7,
-      ease: [0, 0.71, 0.2, 1.01],
-    },
-  },
-  close: {
-    clipPath: 'circle(30px at 18px 18px)',
-    transition: {
-      duration: 0.7,
-      delay: 1,
-      ease: [0, 0.71, 0.2, 1.01],
-    },
-  },
-};
+import Sidebar from './Sidebar';
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -61,6 +43,8 @@ export const Navbar = () => {
           ></span>
         </div>
       </div>
+
+      <Sidebar isMenuOpen={isMenuOpen} />
 
       {/* nav */}
       {/* <div className='absolute overflow-hidden bg-layout-2 w-96 top-0 right-0 bottom-0'>
