@@ -21,7 +21,73 @@ const sidebarVariants: Variants = {
   },
 };
 
-export const Navbar = () => {
+const barOneVariants: Variants = {
+  initial: {
+    rotate: 0,
+    bottom: 5,
+    left: 0,
+    transition: {
+      ease: 'easeOut',
+      duration: 0.5,
+      type: 'tween',
+    },
+    position: 'absolute',
+    translateX: '-100%',
+    height: 4,
+    width: 45,
+    background: 'white',
+  },
+  rotated: {
+    rotate: '45deg',
+    bottom: 0,
+    left: 0,
+    transition: {
+      ease: 'easeOut',
+      duration: 0.5,
+      type: 'tween',
+    },
+    position: 'absolute',
+    translateX: '-100%',
+    height: 4,
+    width: 45,
+    background: 'white',
+  },
+};
+
+const barTwoVariants: Variants = {
+  initial: {
+    rotate: 0,
+    bottom: -5,
+    left: 0,
+    transition: {
+      ease: 'easeOut',
+      duration: 0.5,
+      type: 'tween',
+    },
+    position: 'absolute',
+    translateX: '-100%',
+    width: 35,
+    height: 4,
+    background: 'white',
+  },
+  rotated: {
+    rotate: '-45deg',
+    bottom: 0,
+    left: 0,
+    transition: {
+      ease: 'easeOut',
+      duration: 0.5,
+      type: 'tween',
+    },
+    position: 'absolute',
+    translateX: '-100%',
+    width: 45,
+    height: 4,
+    background: 'white',
+  },
+};
+
+export const Navbar2 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen((s) => !s);
 
@@ -41,24 +107,16 @@ export const Navbar = () => {
         onClick={toggleMenu}
       >
         <div className='relative'>
-          <span
-            className={`absolute -translate-x-full left-0 h-[4px] bg-white
-          ease-in-out duration-500 ${
-            isMenuOpen
-              ? 'rotate-45 w-[30px] md:w-[35px] bottom-0'
-              : 'w-[30px] md:w-[45px] bottom-[2.5px]'
-          }
-        `}
-          ></span>
-          <span
-            className={`absolute -translate-x-full  left-0  h-[4px] bg-white 
-          ease-in-out duration-500 ${
-            isMenuOpen
-              ? '-rotate-45 w-[30px] md:w-[35px] bottom-0'
-              : 'w-[20px] md:w-[30px] -bottom-[7.5px]'
-          }
-        `}
-          ></span>
+          <motion.span
+            variants={barOneVariants}
+            initial={false}
+            animate={isMenuOpen ? 'rotated' : 'initial'}
+          ></motion.span>
+          <motion.span
+            variants={barTwoVariants}
+            initial={false}
+            animate={isMenuOpen ? 'rotated' : 'initial'}
+          ></motion.span>
         </div>
       </div>
 
