@@ -15,6 +15,15 @@ module.exports = {
         anton: ['Anton', 'sans-serif'],
         montserrat: ['Montserrat', 'sans-serif'],
       },
+      animation: {
+        wave: 'move 1.5s linear infinite',
+      },
+      keyframes: {
+        move: {
+          '0%': { transform: 'translateX(-1px)' },
+          '100%': { transform: 'translateX(-55px)' },
+        },
+      },
     },
   },
   plugins: [],
