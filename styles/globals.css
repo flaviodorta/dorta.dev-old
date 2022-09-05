@@ -12,10 +12,10 @@
   }
 
   .sidebar--list {
-    @apply absolute p-5 top-24 w-48;
+    @apply absolute p-5 top-24 w-fit;
   }
 
   .sidebar--list-item {
-    @apply flex items-center mb-5 space-x-6 cursor-pointer;
+    @apply flex items-center mb-8 space-x-6 cursor-pointer;
   }
 }

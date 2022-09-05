@@ -1,7 +1,7 @@
-import { motion, AnimatePresence, Variants, useCycle } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 const menuItemVariants: Variants = {
-  visible: ({ idx, length }) => {
+  visible: ({ idx }) => {
     return {
       opacity: 1,
       y: 0,
@@ -27,6 +27,18 @@ const menuItemVariants: Variants = {
   },
 };
 
+const linkNameVariants: Variants = {
+  hovered: {
+    x: 20,
+    transition: {
+      type: 'tween',
+      duration: 0.1,
+      delay: 0,
+      ease: 'linear',
+    },
+  },
+};
+
 interface MenuItemProps {
   isMenuOpen: boolean;
   custom: { idx: number; length: number };
@@ -44,8 +56,24 @@ const MenuItem = ({ isMenuOpen, custom, linkName }: MenuItemProps) => {
           animate='visible'
           exit='hidden'
           custom={custom}
+          layout
         >
-          {linkName}
+          <div className='text-4xl md:text-5xl font-anton group'>
+            <motion.h1
+              variants={linkNameVariants}
+              whileHover='hovered'
+              className='font-anton uppercase tracking-[2px] group-hover:text-primary transition-colors duration-200'
+            >
+              <span className='hidden -left-5 absolute delay-500 group-hover:inline-block group-hover:text-primary transition-all duration-300'>
+                &#123;
+              </span>
+              {linkName}
+              <span className='hidden -right-[6px] absolute delay-500 group-hover:inline-block group-hover:text-primary transition-all duration-300'>
+                &#125;
+              </span>
+              <span className='text-primary group-hover:opacity-0'>.</span>
+            </motion.h1>
+          </div>
         </motion.li>
       )}
     </AnimatePresence>
@@ -87,7 +115,7 @@ const backgroundVariants: Variants = {
     background: '#121212',
     transition: {
       duration: 1.6,
-      delay: 0.5,
+      delay: 0.8,
       type: 'spring',
       bounce: 0,
     },

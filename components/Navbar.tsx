@@ -19,21 +19,21 @@ export const Navbar = () => {
       </div>
 
       <div
-        className='relative z-50 flex items-center justify-end w-[50px] h-[40px] cursor-pointer'
+        className='relative group z-50 flex items-center justify-end w-[50px] h-[40px] cursor-pointer'
         onClick={toggleMenu}
       >
         <div className='relative'>
           <span
-            className={`absolute -translate-x-full left-0 h-[4px] bg-white
-          ease-in-out duration-500 ${
+            className={`absolute -translate-x-full left-0 h-[4px] bg-white group-hover:bg-primary
+          ease-in-out ${
             isMenuOpen
-              ? 'rotate-45 w-[30px] md:w-[35px] bottom-0'
-              : 'w-[30px] md:w-[45px] bottom-[2.5px]'
+              ? 'rotate-45 w-[30px] md:w-[35px] bottom-0 duration-500'
+              : 'w-[30px] md:w-[45px] bottom-[2.5px] duration-300'
           }
         `}
           ></span>
           <span
-            className={`absolute -translate-x-full  left-0  h-[4px] bg-white 
+            className={`absolute -translate-x-full  left-0  h-[4px] bg-white group-hover:bg-primary
           ease-in-out duration-500 ${
             isMenuOpen
               ? '-rotate-45 w-[30px] md:w-[35px] bottom-0'
