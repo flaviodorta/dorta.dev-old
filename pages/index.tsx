@@ -1,11 +1,14 @@
 import { Navbar } from '../components/Navbar';
+import ZIndex from '../components/components_testing/ZIndex';
 
 export default function Home() {
   return (
     <>
       <Navbar />
 
-      <main className='mx-auto px-2 select-none font-anton md:-translate-y-24 md:-translate-x-24'>
+      <ZIndex />
+
+      {/* <main className='mx-auto px-2 select-none font-anton md:-translate-y-24 md:-translate-x-24'>
         <h1 className='text-6xl md:text-7xl mb-4'>
           creative developer
           <span className='text-primary'>.</span>
@@ -26,7 +29,7 @@ export default function Home() {
         <div className='w-[80px] h-[80px] flex items-center justify-center'>
           social
         </div>
-      </footer>
+      </footer> */}
     </>
   );
 }
