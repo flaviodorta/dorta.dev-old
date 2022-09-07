@@ -16,12 +16,18 @@ module.exports = {
         montserrat: ['Montserrat', 'sans-serif'],
       },
       animation: {
-        wave: 'move 1.5s linear infinite',
+        wave: 'wave 1.5s linear infinite',
+        pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
-        move: {
+        wave: {
           '0%': { transform: 'translateX(-1px)' },
           '100%': { transform: 'translateX(-55px)' },
+        },
+        pulse: {
+          '0%': { opacity: 0.1 },
+          '50%': { opacity: 1 },
+          '100%': { opacity: 0.1 },
         },
       },
     },

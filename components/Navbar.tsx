@@ -5,6 +5,7 @@ import Sidebar from './Sidebar';
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const toggleMenu = () => setIsMenuOpen((s) => !s);
 
   return (
@@ -19,7 +20,7 @@ export const Navbar = () => {
       </div>
 
       <div
-        className='relative group z-50 flex items-center justify-end w-[50px] h-[40px] cursor-pointer'
+        className='relative group z-40 flex items-center justify-end w-[50px] h-[40px]'
         onClick={toggleMenu}
       >
         <div className='relative'>
@@ -31,16 +32,25 @@ export const Navbar = () => {
               : 'w-[30px] md:w-[45px] bottom-[2.5px] duration-300'
           }
         `}
-          ></span>
+          />
           <span
-            className={`absolute -translate-x-full  left-0  h-[4px] bg-white group-hover:bg-primary
+            className={`absolute -translate-x-full left-0  h-[4px] bg-white group-hover:bg-primary
           ease-in-out duration-500 ${
             isMenuOpen
               ? '-rotate-45 w-[30px] md:w-[35px] bottom-0'
               : 'w-[20px] md:w-[30px] -bottom-[7.5px]'
           }
         `}
-          ></span>
+          />
+          <span
+            className={`absolute -translate-x-full  left-0  h-[4px] bg-white group-hover:bg-primary
+          ease-in-out duration-700 ${
+            isMenuOpen
+              ? '-rotate-45 w-[30px] md:w-[35px] bottom-0 opacity-0 duration-75'
+              : 'w-[20px] md:w-[15px] -bottom-[16.5px]'
+          }
+        `}
+          />
         </div>
       </div>
 

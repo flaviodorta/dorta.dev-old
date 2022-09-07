@@ -4,7 +4,7 @@
 
 @layer components {
   .sidebar {
-    @apply absolute top-0 right-0 bottom-0 w-60 md:w-96;
+    @apply absolute z-30 top-0 right-0 bottom-0 w-60 md:w-96;
   }
 
   .sidebar--background {
@@ -16,6 +16,6 @@
   }
 
   .sidebar--list-item {
-    @apply flex items-center mb-8 space-x-6 cursor-pointer;
+    @apply flex items-center mb-8 space-x-6;
   }
 }

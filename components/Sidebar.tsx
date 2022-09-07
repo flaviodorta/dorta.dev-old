@@ -20,7 +20,7 @@ const menuItemVariants: Variants = {
       transition: {
         type: 'spring',
         bounce: 0,
-        delay: (length - idx) * 0.1,
+        delay: (length - idx) * 0.05,
         duration: 0.8,
       },
     };
@@ -32,7 +32,7 @@ const linkNameVariants: Variants = {
     x: 10,
     transition: {
       type: 'tween',
-      duration: 0.1,
+      duration: 0.18,
       delay: 0,
       ease: 'linear',
     },
@@ -62,13 +62,14 @@ const MenuItem = ({ isMenuOpen, custom, linkName }: MenuItemProps) => {
             <motion.h1
               variants={linkNameVariants}
               whileHover='hovered'
+              layout
               className='font-anton uppercase tracking-[2px] group-hover:text-primary transition-colors duration-200'
             >
-              <span className='hidden -left-5 absolute delay-500 group-hover:inline-block group-hover:text-primary transition-all duration-300'>
+              <span className='hidden -left-5 absolute delay-500 group-hover:inline-block group-hover:text-primary transition-all duration-500'>
                 &#123;
               </span>
               {linkName}
-              <span className='hidden -right-[6px] absolute delay-500 group-hover:inline-block group-hover:text-primary transition-all duration-300'>
+              <span className='hidden -right-[7px] absolute delay-500 group-hover:inline-block group-hover:text-primary transition-all duration-300'>
                 &#125;
               </span>
               <span className='text-primary group-hover:opacity-0'>.</span>
@@ -91,6 +92,7 @@ const Navigation = ({ isMenuOpen }: NavigationProps) => {
     <ul className='sidebar--list'>
       {linksName.map((linkName, i, arr) => (
         <MenuItem
+          key={i}
           custom={{ idx: i, length: arr.length }}
           isMenuOpen={isMenuOpen}
           linkName={linkName}
