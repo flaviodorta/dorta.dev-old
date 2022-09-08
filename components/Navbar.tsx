@@ -5,8 +5,10 @@ import Sidebar from './Sidebar';
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hover, setHover] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen((s) => !s);
+  const toggleHover = () => setHover((s) => !s);
 
   return (
     <nav className='flex justify-between items-center text-white w-full'>
@@ -20,12 +22,16 @@ export const Navbar = () => {
       </div>
 
       <div
-        className='relative group z-40 flex items-center justify-end w-[50px] h-[40px]'
+        className='relative group group-hover:bg-transparent z-40 flex items-center justify-end w-[70px] h-[70px]'
         onClick={toggleMenu}
+        onMouseEnter={toggleHover}
+        onMouseLeave={toggleHover}
       >
         <div className='relative'>
           <span
-            className={`absolute -translate-x-full left-0 h-[4px] bg-white group-hover:bg-primary
+            className={`absolute -translate-x-full left-0 h-[4px] ${
+              hover ? 'bg-primary' : 'bg-white'
+            }
           ease-in-out ${
             isMenuOpen
               ? 'rotate-45 w-[30px] md:w-[35px] bottom-0 duration-500'
@@ -34,7 +40,9 @@ export const Navbar = () => {
         `}
           />
           <span
-            className={`absolute -translate-x-full left-0  h-[4px] bg-white group-hover:bg-primary
+            className={`absolute -translate-x-full left-0  h-[4px] ${
+              hover ? 'bg-primary' : 'bg-white'
+            }
           ease-in-out duration-500 ${
             isMenuOpen
               ? '-rotate-45 w-[30px] md:w-[35px] bottom-0'
@@ -43,11 +51,13 @@ export const Navbar = () => {
         `}
           />
           <span
-            className={`absolute -translate-x-full  left-0  h-[4px] bg-white group-hover:bg-primary
+            className={`absolute -translate-x-full  left-0  h-[4px] ${
+              hover ? 'bg-primary' : 'bg-white'
+            }
           ease-in-out duration-700 ${
             isMenuOpen
               ? '-rotate-45 w-[30px] md:w-[35px] bottom-0 opacity-0 duration-75'
-              : 'w-[20px] md:w-[15px] -bottom-[16.5px]'
+              : 'w-[10px] md:w-[15px] -bottom-[16.5px]'
           }
         `}
           />

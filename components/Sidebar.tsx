@@ -61,7 +61,7 @@ const MenuItem = ({ isMenuOpen, custom, linkName }: MenuItemProps) => {
           <div className='text-4xl md:text-5xl font-anton group'>
             <motion.h1
               variants={linkNameVariants}
-              whileHover='hovered'
+              whileHover={isMenuOpen ? 'hovered' : ''}
               layout
               className='font-anton uppercase tracking-[2px] group-hover:text-primary transition-colors duration-200'
             >

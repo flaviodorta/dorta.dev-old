@@ -15,8 +15,8 @@ const Layout = ({ children }: Props) => {
 
   const cursorVariants: Variants = {
     default: {
-      x: mousePosition.x - 16,
-      y: mousePosition.y - 16,
+      x: mousePosition.x - 4,
+      y: mousePosition.y - 4,
       border: 'none',
     },
     text: {
@@ -44,10 +44,7 @@ const Layout = ({ children }: Props) => {
   }, []);
 
   return (
-    <div className='bg-layout-2 cursor-none flex flex-col justify-between max-h-full h-screen text-white px-5 pt-2 pb-4 md:px-6 md:pb-10 overflow-hidden'>
-      <h1 onMouseEnter={textEnter} onMouseLeave={textLeave}>
-        cuzao otario do krl
-      </h1>
+    <div className='bg-layout-2 cursor-none flex flex-col justify-between max-h-full h-screen text-white px-5  pb-4 md:px-6 md:pb-10 overflow-hidden'>
       <motion.div
         variants={cursorVariants}
         animate={cursorVariant}
@@ -57,7 +54,7 @@ const Layout = ({ children }: Props) => {
           stiffness: 400,
           bounce: 0.05,
         }}
-        className='bg-primary z-50 h-3 w-3 rounded-[50%] pointer-events-none  fixed top-0 left-0'
+        className='bg-primary z-50 h-2 w-2 rounded-[50%] pointer-events-none fixed top-0 left-0 hidden md:block'
       />
       {children}
     </div>
