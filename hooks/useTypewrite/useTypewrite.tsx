@@ -5,9 +5,10 @@ import {
   useReducer,
   ReactElement,
 } from 'react';
-import { reducer } from './reducer';
 import { isEqual } from 'lodash';
 import { nanoid } from '@reduxjs/toolkit';
+import { getAllIndexes, randomIntegerInterval } from '../../helpers/functions';
+import { removeWord } from '../../helpers/functions';
 
 export interface TypewriterProps {
   texts: string[];
@@ -18,29 +19,20 @@ export interface TypewriterProps {
 
 export const useTypewriter = ({
   texts = [],
-  typeSpeed = 50,
+  typeSpeed = 70,
   deleteSpeed = 200,
-  delaySpeed = 1500,
+  delaySpeed = 2000,
 }: TypewriterProps): (string | ReactElement)[] => {
   const [{ isDeleting, speed, text, countText, indexWord }, dispatch] =
     useReducer(reducer, {
       isDeleting: false,
-      speed: typeSpeed,
+      speed: randomIntegerInterval(typeSpeed, 25),
       text: [],
       countText: 0,
       indexWord: 0,
     });
 
   const firstRun = useRef(true);
-
-  function getAllIndexes(arr, val) {
-    var indexes = [],
-      i = -1;
-    while ((i = arr.indexOf(val, i + 1)) != -1) {
-      indexes.push(i);
-    }
-    return indexes;
-  }
 
   const splitText = useCallback((string: string) => {
     let ampersand: React.ReactElement;
@@ -52,7 +44,7 @@ export const useTypewriter = ({
     if (strArr.includes('&')) {
       ampersand = (
         <span key={nanoid()} className='font-bold text-primary'>
-          &
+          {'&'}
         </span>
       );
 
@@ -61,22 +53,21 @@ export const useTypewriter = ({
       });
     }
 
-    if (strArr.includes('.')) {
-      point = (
-        <span
-          key={nanoid()}
-          className='font-bold text-primary font-anton animate-pulse'
-        >
-          .
-        </span>
-      );
+    // if (strArr.includes('.')) {
+    //   point = (
+    //     <span
+    //       key={nanoid()}
+    //       className='font-bold text-primary left-[1px] text-6xl font-anton animate-pulse'
+    //     >
+    //       {'.'}
+    //     </span>
+    //   );
 
-      allIndexesPoint.forEach((i) => {
-        strArr[i] = point;
-      });
-    }
+    //   allIndexesPoint.forEach((i) => {
+    //     strArr[i] = point;
+    //   });
+    // }
 
-    // console.log(strArr);
     return strArr;
   }, []);
 
@@ -88,15 +79,25 @@ export const useTypewriter = ({
     console.log(indexWord, word);
 
     if (!isDeleting) {
-      dispatch({ type: 'TYPE', payload: word, speed: typeSpeed });
+      dispatch({
+        type: 'TYPING',
+        payload: word,
+        speed: randomIntegerInterval(typeSpeed, 25),
+      });
 
       if (indexWord === textArr.length - 1) {
-        dispatch({ type: 'SPEED', payload: delaySpeed });
+        dispatch({
+          type: 'TRANSITION_FINAL',
+          payload: randomIntegerInterval(delaySpeed, 500),
+        });
       }
     } else {
-      dispatch({ type: 'DELETE', speed: deleteSpeed });
+      dispatch({
+        type: 'DELETING',
+        speed: randomIntegerInterval(deleteSpeed, 45),
+      });
 
-      if (isEqual(text, [])) dispatch({ type: 'COUNT' });
+      if (isEqual(text, [])) dispatch({ type: 'TRANSITION_START' });
     }
   }, [
     isDeleting,
@@ -124,3 +125,50 @@ export const useTypewriter = ({
 
   return text;
 };
+
+export type State = {
+  speed: number;
+  text: (string | ReactElement)[];
+  isDeleting: boolean;
+  countText: number;
+  indexWord: number;
+};
+
+export type Action =
+  | { type: 'TRANSITION_FINAL'; payload: number }
+  | { type: 'TYPING'; payload: string | ReactElement; speed: number }
+  | { type: 'DELETING'; speed: number }
+  | { type: 'TRANSITION_START' };
+
+export function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case 'TRANSITION_FINAL':
+      return {
+        ...state,
+        isDeleting: true,
+        speed: action.payload,
+        indexWord: 0,
+      };
+    case 'TYPING':
+      return {
+        ...state,
+        speed: action.speed,
+        text: [...state.text, action.payload],
+        indexWord: state.indexWord + 1,
+      };
+    case 'DELETING':
+      return {
+        ...state,
+        speed: action.speed,
+        text: removeWord(state.text),
+      };
+    case 'TRANSITION_START':
+      return {
+        ...state,
+        isDeleting: false,
+        countText: state.countText + 1,
+      };
+    default:
+      return state;
+  }
+}
