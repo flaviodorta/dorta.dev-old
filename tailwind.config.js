@@ -18,6 +18,7 @@ module.exports = {
       animation: {
         wave: 'wave 1.5s linear infinite',
         pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        ['fast-pulse']: 'full-pulse 0.8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
         wave: {
@@ -28,6 +29,11 @@ module.exports = {
           '0%': { opacity: 0.1 },
           '50%': { opacity: 1 },
           '100%': { opacity: 0.1 },
+        },
+        ['full-pulse']: {
+          '0%': { opacity: 0 },
+          '50%': { opacity: 1 },
+          '100%': { opacity: 0 },
         },
       },
     },

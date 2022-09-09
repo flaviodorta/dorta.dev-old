@@ -54,7 +54,7 @@ const Footer = () => {
                   animate='open'
                   exit='close'
                   whileHover='hover'
-                  className='w-5 h-5 relative z-50 -bottom-4  fill-white hover:fill-primary'
+                  className='w-5 h-5 relative z-50 -bottom-4  fill-white hover:fill-primary duration-300'
                 />
 
                 <LinkedIn

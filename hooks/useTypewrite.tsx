@@ -7,8 +7,8 @@ import {
 } from 'react';
 import { isEqual } from 'lodash';
 import { nanoid } from '@reduxjs/toolkit';
-import { getAllIndexes, randomIntegerInterval } from '../../helpers/functions';
-import { removeWord } from '../../helpers/functions';
+import { getAllIndexes, randomIntegerInterval } from '../helpers/functions';
+import { removeWord } from '../helpers/functions';
 
 export interface TypewriterProps {
   texts: string[];
@@ -20,13 +20,13 @@ export interface TypewriterProps {
 export const useTypewriter = ({
   texts = [],
   typeSpeed = 70,
-  deleteSpeed = 200,
+  deleteSpeed = 150,
   delaySpeed = 2000,
 }: TypewriterProps): (string | ReactElement)[] => {
   const [{ isDeleting, speed, text, countText, indexWord }, dispatch] =
     useReducer(reducer, {
       isDeleting: false,
-      speed: randomIntegerInterval(typeSpeed, 25),
+      speed: randomIntegerInterval(typeSpeed, 50),
       text: [],
       countText: 0,
       indexWord: 0,
@@ -34,49 +34,56 @@ export const useTypewriter = ({
 
   const firstRun = useRef(true);
 
-  const splitText = useCallback((string: string) => {
-    let ampersand: React.ReactElement;
-    let point: React.ReactElement;
-    const strArr: (string | ReactElement)[] = string.split('');
-    const allIndexesAmp = getAllIndexes(strArr, '&');
-    const allIndexesPoint = getAllIndexes(strArr, '.');
+  const turnTextCharInReactElement = useCallback(
+    (text: string, chars: string | string[]) => {
+      const textArr: (string | ReactElement)[] = text.split('');
+      let charElement: ReactElement;
 
-    if (strArr.includes('&')) {
-      ampersand = (
-        <span key={nanoid()} className='font-bold text-primary'>
-          {'&'}
-        </span>
-      );
+      if (Array.isArray(chars)) {
+        chars.forEach((char) => {
+          const allIndexesChar = getAllIndexes(textArr, char);
+          if (textArr.includes(char)) {
+            charElement = (
+              <span
+                key={nanoid()}
+                className='font-bold font-montserrat text-primary'
+              >
+                {char}
+              </span>
+            );
 
-      allIndexesAmp.forEach((i) => {
-        strArr[i] = ampersand;
-      });
-    }
+            allIndexesChar.forEach((i) => {
+              textArr[i] = charElement;
+            });
+          }
+        });
+      } else {
+        if (textArr.includes(chars)) {
+          const allIndexesChar = getAllIndexes(textArr, chars);
+          charElement = (
+            <span
+              key={nanoid()}
+              className='font-bold font-montserrat text-primary'
+            >
+              {chars}
+            </span>
+          );
 
-    // if (strArr.includes('.')) {
-    //   point = (
-    //     <span
-    //       key={nanoid()}
-    //       className='font-bold text-primary left-[1px] text-6xl font-anton animate-pulse'
-    //     >
-    //       {'.'}
-    //     </span>
-    //   );
+          allIndexesChar.forEach((i) => {
+            textArr[i] = charElement;
+          });
+        }
+      }
 
-    //   allIndexesPoint.forEach((i) => {
-    //     strArr[i] = point;
-    //   });
-    // }
-
-    return strArr;
-  }, []);
+      return textArr;
+    },
+    []
+  );
 
   const handleTyping = useCallback(() => {
     const indexText = countText % texts.length;
-    const textArr = splitText(texts[indexText]);
-
+    const textArr = turnTextCharInReactElement(texts[indexText], '&');
     const word = textArr[indexWord];
-    console.log(indexWord, word);
 
     if (!isDeleting) {
       dispatch({
@@ -94,7 +101,7 @@ export const useTypewriter = ({
     } else {
       dispatch({
         type: 'DELETING',
-        speed: randomIntegerInterval(deleteSpeed, 45),
+        speed: randomIntegerInterval(deleteSpeed, 30),
       });
 
       if (isEqual(text, [])) dispatch({ type: 'TRANSITION_START' });
@@ -102,7 +109,7 @@ export const useTypewriter = ({
   }, [
     isDeleting,
     countText,
-    splitText,
+    turnTextCharInReactElement,
     indexWord,
     texts,
     text,
