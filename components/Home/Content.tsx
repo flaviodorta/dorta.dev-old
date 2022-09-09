@@ -1,8 +1,15 @@
 import React from 'react';
-import { useTypeWriter } from '../../hooks/useTypeWriter';
+import { useTypewriter } from '../../hooks/useTypewrite/useTypewrite';
 
 const Content = () => {
-  const typewriter = useTypeWriter();
+  const strings = [
+    'modern & innovative digital solutions.',
+    'e-commerces, web systems, landing pages, blogs & much more.',
+    'front-end & back-end development.',
+    'UX & UI best pratices.',
+  ];
+
+  const typewriter = useTypewriter({ texts: strings });
 
   return (
     <main className='mx-auto px-2 select-none font-anton md:-translate-y-24 md:-translate-x-24'>
@@ -11,7 +18,9 @@ const Content = () => {
         <span className='text-primary'>.</span>
       </h1>
 
-      <p className='font-montserrat absolute font-regular md:text-2xl'></p>
+      <p className='font-montserrat absolute font-regular md:text-2xl'>
+        {typewriter}
+      </p>
     </main>
   );
 };

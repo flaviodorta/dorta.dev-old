@@ -1,4 +1,8 @@
+# completed
+
+- make a animate layout to social icons
+
 # to do
 
-- add redux with custom cursor logic
-- make a animate layout to social icons
+- typewriter
+- add redux with custom cursor logic for

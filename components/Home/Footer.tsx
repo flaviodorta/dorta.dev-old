@@ -8,19 +8,19 @@ import Instagram from '../icons/Instagram';
 
 const socialIconVariants: Variants = {
   close: (idx) => ({
-    y: '50%',
+    y: '80%',
     opacity: 0,
     transition: {
-      duration: 0.3,
-      delay: (2 - idx) * 0.3,
+      duration: 0.25,
+      delay: (2 - idx) * 0.25,
     },
   }),
   open: (idx) => ({
     y: '0',
     opacity: 0.5,
     transition: {
-      duration: 0.3,
-      delay: idx * 0.3,
+      duration: 0.15,
+      delay: idx * 0.15,
     },
   }),
   hover: {
@@ -54,7 +54,7 @@ const Footer = () => {
                   animate='open'
                   exit='close'
                   whileHover='hover'
-                  className='w-5 h-5 relative z-50 -bottom-4  fill-white hover:fill-primary duration-300'
+                  className='w-5 h-5 relative z-50 -bottom-4  fill-white hover:fill-primary'
                 />
 
                 <LinkedIn
@@ -65,7 +65,7 @@ const Footer = () => {
                   animate='open'
                   exit='close'
                   whileHover='hover'
-                  className='w-5 h-5 relative z-50 -bottom-4 fill-white hover:fill-primary duration-300'
+                  className='w-5 h-5 relative z-50 -bottom-4 fill-white hover:fill-primary'
                 />
 
                 <Instagram
@@ -76,7 +76,7 @@ const Footer = () => {
                   animate='open'
                   exit='close'
                   whileHover='hover'
-                  className='w-5 h-5 relative z-50 -bottom-4 fill-white hover:fill-primary duration-300'
+                  className='w-5 h-5 relative z-50 -bottom-4 fill-white hover:fill-primary'
                 />
               </>
             )}

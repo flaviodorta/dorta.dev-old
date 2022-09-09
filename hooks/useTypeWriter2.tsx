@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 
 export const useTypeWriter = (
-  strings?: string[],
+  strings: string[],
   writingDelay?: number,
+  deletingDelay?: number,
   initialDelay?: number,
   finalDelay?: number
 ) => {
@@ -14,7 +15,7 @@ export const useTypeWriter = (
   const stringsIdx = useRef(0);
   const isWriting = useRef(true);
 
-  // const string = strings[stringsIdx.current];
+  const string = strings[stringsIdx.current];
 
   const checkLetter = (
     letter: string,
@@ -49,18 +50,46 @@ export const useTypeWriter = (
     return [...arr, letter];
   };
 
+  const randomInteger = () =>
+    Math.floor(Math.random() * (1000 - 500 + 1) + 500);
+
   const delay = (delay: number) => new Promise((res) => setTimeout(res, delay));
 
+  const settingLetterIdx = () => {
+    if (wordsArr.current.length === string.length) {
+    }
+  };
+
   useEffect(() => {
+    const letter = string[letterIdx.current];
+    let timer;
+    console.log('cu', isWriting.current);
+
     const writing = async () => {
-      console.log('before delay');
-      await delay(5000);
-      console.log('after delay');
+      console.log(words);
+      await delay(10000);
+      console.log(words);
+      if (wordsArr.current.length !== string.length) {
+        wordsArr.current.push(letter);
+        letterIdx.current++;
+        setWords([...wordsArr.current]);
+      }
     };
+
+    const deleting = async () => {
+      await delay(randomInteger());
+      if (wordsArr.current.length !== 0) {
+        wordsArr.current.pop();
+        letterIdx.current--;
+        setWords([...wordsArr.current]);
+      }
+    };
+
     if (isWriting.current) {
       writing();
+      console.log(letterIdx, wordsArr, words);
     }
-  }, []);
+  }, [words]);
 
   return words;
 };
