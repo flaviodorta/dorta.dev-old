@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Logo from '../public/logo.svg';
 import Sidebar from './Sidebar';
 import { useRecoilState } from 'recoil';
 import { cursorVariantAtom } from '../recoil/atoms';
-import dynamic from 'next/dynamic';
+import useSound from 'use-sound';
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hover, setHover] = useState(false);
+  const [openMenuSoundPlay] = useSound('/sounds/open-menu.wav');
 
-  const toggleMenu = () => setIsMenuOpen((s) => !s);
+  const toggleMenu = () => {
+    setIsMenuOpen((s) => !s);
+    openMenuSoundPlay();
+  };
   const toggleHover = () => setHover((s) => !s);
 
   const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
