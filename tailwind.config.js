@@ -14,6 +14,7 @@ module.exports = {
       fontFamily: {
         anton: ['Anton', 'sans-serif'],
         montserrat: ['Montserrat', 'sans-serif'],
+        'share-tech': ['Share Tech Mono', 'monospace'],
       },
       animation: {
         wave: 'wave 1.5s linear infinite',

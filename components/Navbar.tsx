@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Logo from '../public/logo.svg';
 import Sidebar from './Sidebar';
 import { useRecoilState } from 'recoil';
 import { cursorVariantAtom } from '../recoil/atoms';
+import dynamic from 'next/dynamic';
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

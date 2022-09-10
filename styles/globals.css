@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Gotham Bold';
+  src: url('/fonts/gotham/GothamBold.ttf');
+}
+
+@font-face {
+  font-family: 'Gotham Medium';
+  src: url('/fonts/gotham/GothamMedium.ttf');
+}
+
+@font-face {
+  font-family: 'Gotham Light';
+  src: url('/fonts/gotham/GothamLight.ttf');
+}
+
 @layer components {
   .sidebar {
     @apply absolute z-30 top-0 right-0 bottom-0 w-60 md:w-96;
