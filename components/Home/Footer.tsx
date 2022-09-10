@@ -1,10 +1,13 @@
 import { Variants, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { TbNorthStar } from 'react-icons/tb';
 import GitHub from '../icons/Github';
 import LinkedIn from '../icons/Linkedin';
 import Instagram from '../icons/Instagram';
+import { useRecoilState } from 'recoil';
+import { cursorVariantAtom } from '../../recoil/atoms';
+import { motion } from 'framer-motion';
 
 const socialIconVariants: Variants = {
   close: (idx) => ({
@@ -17,21 +20,39 @@ const socialIconVariants: Variants = {
   }),
   open: (idx) => ({
     y: '0',
-    opacity: 0.5,
+    opacity: 1,
     transition: {
       duration: 0.15,
       delay: idx * 0.15,
     },
   }),
-  hover: {
+};
+
+const socialIconContainerVariants: Variants = {
+  close: (idx) => ({
+    y: '80%',
+    opacity: 0,
+    transition: {
+      duration: 0.25,
+      delay: (2 - idx) * 0.25,
+    },
+  }),
+  open: (idx) => ({
+    y: '0',
     opacity: 1,
-  },
+    transition: {
+      duration: 0.15,
+      delay: idx * 0.15,
+    },
+  }),
 };
 
 const Footer = () => {
   const [shouldOpenSocialIcons, setShouldOpenSocialIcons] = useState(false);
 
   const toggleSocial = () => setShouldOpenSocialIcons((s) => !s);
+
+  const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
 
   return (
     <footer className='flex justify-between'>
@@ -40,50 +61,65 @@ const Footer = () => {
         before:content-["aaaaaaaaaaa"] -before:top-[42px] before:left-0 before:text-4xl before:decoration-wavy before:decoration-white before:text-transparent before:underline
         before:animate-wave
         '
+        onMouseEnter={() => setCursorVariant('homeSoundIcon')}
+        onMouseLeave={() => setCursorVariant('default')}
       />
       <div className='w-fit h-[80px] z-40 flex items-end justify-end'>
         <div className='flex flex-col gap-4 justify-end items-center'>
           <AnimatePresence>
             {shouldOpenSocialIcons && (
               <>
-                <GitHub
+                <motion.div
+                  className='group w-8 h-8 flex justify-center items-center'
                   key={2}
-                  variants={socialIconVariants}
+                  variants={socialIconContainerVariants}
                   custom={2}
                   initial='close'
                   animate='open'
                   exit='close'
-                  whileHover='hover'
-                  className='w-5 h-5 relative z-50 -bottom-4  fill-white hover:fill-primary duration-300'
-                />
+                  onMouseEnter={() => setCursorVariant('homeSocialIcon')}
+                  onMouseLeave={() => setCursorVariant('default')}
+                >
+                  <GitHub className='w-6 h-6 relative z-50 -bottom-4 brightness-50 group-hover:brightness-90 fill-white group-hover:fill-primary duration-300' />
+                </motion.div>
 
-                <LinkedIn
+                <motion.div
+                  className='group w-8 h-8 flex justify-center items-center'
                   key={1}
-                  variants={socialIconVariants}
+                  variants={socialIconContainerVariants}
                   custom={1}
                   initial='close'
                   animate='open'
                   exit='close'
-                  whileHover='hover'
-                  className='w-5 h-5 relative z-50 -bottom-4 fill-white hover:fill-primary'
-                />
+                  onMouseEnter={() => setCursorVariant('homeSocialIcon')}
+                  onMouseLeave={() => setCursorVariant('default')}
+                >
+                  <LinkedIn className='w-6 h-6 relative z-50 -bottom-4 brightness-50 group-hover:brightness-90 fill-white group-hover:fill-primary duration-300' />
+                </motion.div>
 
-                <Instagram
+                <motion.div
+                  className='group w-8 h-8 flex justify-center items-center'
                   key={0}
-                  variants={socialIconVariants}
+                  variants={socialIconContainerVariants}
                   custom={0}
                   initial='close'
                   animate='open'
                   exit='close'
-                  whileHover='hover'
-                  className='w-5 h-5 relative z-50 -bottom-4 fill-white hover:fill-primary'
-                />
+                  onMouseEnter={() => setCursorVariant('homeSocialIcon')}
+                  onMouseLeave={() => setCursorVariant('default')}
+                >
+                  <Instagram className='w-6 h-6 relative z-50 -bottom-4 brightness-50 group-hover:brightness-90 fill-white group-hover:fill-primary duration-300' />
+                </motion.div>
               </>
             )}
           </AnimatePresence>
 
           <div className='group relative -bottom-4'>
-            <div className='w-14 h-9 flex items-end justify-center group-hover:bg-transparent'>
+            <div
+              className='w-14 h-9 flex items-end justify-center group-hover:bg-transparent'
+              onMouseEnter={() => setCursorVariant('homeOpenSocialIconsIcon')}
+              onMouseLeave={() => setCursorVariant('default')}
+            >
               <TbNorthStar
                 onClick={toggleSocial}
                 className={`w-8 h-8 group-hover:text-primary duration-300 transition-all ${

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Logo from '../public/logo.svg';
 import Sidebar from './Sidebar';
+import { useRecoilState } from 'recoil';
+import { cursorVariantAtom } from '../recoil/atoms';
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,9 +12,16 @@ export const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen((s) => !s);
   const toggleHover = () => setHover((s) => !s);
 
+  const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
+
   return (
+    // logo icon
     <nav className='flex justify-between items-center text-white w-full'>
-      <div className='relative select-none w-[120px] h-[30px] md:w-[160px] md:h-[40px]'>
+      <div
+        className='relative select-none w-[120px] h-[30px] md:w-[160px] md:h-[40px]'
+        onMouseEnter={() => setCursorVariant('homeLogo')}
+        onMouseLeave={() => setCursorVariant('default')}
+      >
         <Image
           src={Logo}
           className='h-full w-[120px] sm:h-64'
@@ -21,11 +30,20 @@ export const Navbar = () => {
         />
       </div>
 
+      {/* menu burger icon */}
       <div
         className='relative group group-hover:bg-transparent z-40 flex items-center justify-end w-[70px] h-[70px]'
         onClick={toggleMenu}
-        onMouseEnter={toggleHover}
-        onMouseLeave={toggleHover}
+        onMouseEnter={() => {
+          toggleHover();
+          setCursorVariant('homeMenuIcon');
+        }}
+        onMouseLeave={() => {
+          toggleHover();
+          setCursorVariant('default');
+        }}
+        onMouseDown={() => setCursorVariant('clicked')}
+        onMouseUp={() => setCursorVariant('homeMenuIcon')}
       >
         <div className='relative'>
           <span
@@ -65,16 +83,6 @@ export const Navbar = () => {
       </div>
 
       <Sidebar isMenuOpen={isMenuOpen} />
-
-      {/* nav */}
-      {/* <div className='absolute overflow-hidden bg-layout-2 w-96 top-0 right-0 bottom-0'>
-        <motion.div
-          initial={false}
-          variants={sidebarVariants}
-          animate={isMenuOpen ? 'open' : 'close'}
-          className='absolute w-12 h-12 -top-[24px] -right-[24px] rounded-full bg-layout'
-        ></motion.div>
-      </div> */}
     </nav>
   );
 };

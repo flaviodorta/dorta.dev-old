@@ -1,4 +1,6 @@
 import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { useRecoilState } from 'recoil';
+import { cursorVariantAtom } from '../recoil/atoms';
 
 const menuItemVariants: Variants = {
   visible: ({ idx }) => {
@@ -46,6 +48,8 @@ interface MenuItemProps {
 }
 
 const MenuItem = ({ isMenuOpen, custom, linkName }: MenuItemProps) => {
+  const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
+
   return (
     <AnimatePresence>
       {isMenuOpen && (
@@ -64,6 +68,8 @@ const MenuItem = ({ isMenuOpen, custom, linkName }: MenuItemProps) => {
               whileHover={isMenuOpen ? 'hovered' : ''}
               layout
               className='font-anton uppercase tracking-[2px] group-hover:text-primary transition-colors duration-200'
+              onMouseEnter={() => setCursorVariant('homeMenuOption')}
+              onMouseLeave={() => setCursorVariant('default')}
             >
               <span className='hidden -left-5 absolute delay-500 group-hover:inline-block group-hover:text-primary transition-all duration-500'>
                 &#123;
