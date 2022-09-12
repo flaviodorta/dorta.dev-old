@@ -1,45 +1,12 @@
-import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRecoilState } from 'recoil';
+import useSound from 'use-sound';
 import { cursorVariantAtom } from '../recoil/atoms';
-
-const menuItemVariants: Variants = {
-  visible: ({ idx }) => {
-    return {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: 'spring',
-        bounce: 0,
-        delay: 0.4 + idx * 0.1,
-        duration: 1,
-      },
-    };
-  },
-  hidden: ({ idx, length }) => {
-    return {
-      opacity: 0,
-      y: 50,
-      transition: {
-        type: 'spring',
-        bounce: 0,
-        delay: (length - idx) * 0.05,
-        duration: 0.8,
-      },
-    };
-  },
-};
-
-const linkNameVariants: Variants = {
-  hovered: {
-    x: 10,
-    transition: {
-      type: 'tween',
-      duration: 0.18,
-      delay: 0,
-      ease: 'linear',
-    },
-  },
-};
+import {
+  backgroundVariants,
+  linkNameVariants,
+  menuItemVariants,
+} from '../helpers/variants';
 
 interface MenuItemProps {
   isMenuOpen: boolean;
@@ -49,6 +16,7 @@ interface MenuItemProps {
 
 const MenuItem = ({ isMenuOpen, custom, linkName }: MenuItemProps) => {
   const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
+  const [hoverMenuOptionSoundPlay] = useSound('/sounds/hover-menu-option.wav');
 
   return (
     <AnimatePresence>
@@ -68,7 +36,10 @@ const MenuItem = ({ isMenuOpen, custom, linkName }: MenuItemProps) => {
               whileHover={isMenuOpen ? 'hovered' : ''}
               layout
               className='font-anton uppercase tracking-[2px] group-hover:text-primary transition-colors duration-200'
-              onMouseEnter={() => setCursorVariant('homeMenuOption')}
+              onMouseEnter={() => {
+                setCursorVariant('homeMenuOption');
+                hoverMenuOptionSoundPlay();
+              }}
               onMouseLeave={() => setCursorVariant('default')}
             >
               <span className='hidden -left-5 absolute delay-500 group-hover:inline-block group-hover:text-primary transition-all duration-500'>
@@ -108,35 +79,14 @@ const Navigation = ({ isMenuOpen }: NavigationProps) => {
   );
 };
 
-const backgroundVariants: Variants = {
-  open: {
-    clipPath: 'circle(1000px at 384px 0px)',
-    background: '#121212',
-    transition: {
-      duration: 1.8,
-      type: 'spring',
-      bounce: 0,
-    },
-  },
-  close: {
-    clipPath: 'circle(0px at 384px 0px)',
-    background: '#121212',
-    transition: {
-      duration: 1.6,
-      delay: 0.8,
-      type: 'spring',
-      bounce: 0,
-    },
-  },
-};
-
 interface SidebarProps {
   isMenuOpen: boolean;
 }
 
-const Sidebar = ({ isMenuOpen }: SidebarProps) => {
+export const Sidebar = ({ isMenuOpen }: SidebarProps) => {
+  const [variant, setVariant] = useRecoilState(cursorVariantAtom);
   return (
-    <nav className='sidebar'>
+    <nav className='sidebar' onMouseEnter={() => setVariant('default')}>
       <motion.div
         className='sidebar--background'
         variants={backgroundVariants}
@@ -147,5 +97,3 @@ const Sidebar = ({ isMenuOpen }: SidebarProps) => {
     </nav>
   );
 };
-
-export default Sidebar;

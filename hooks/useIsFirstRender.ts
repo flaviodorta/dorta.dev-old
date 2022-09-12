@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useFirstRender = () => {
+export const useIsFirstRender = () => {
   const [isInitial, setIsInitial] = useState(true);
 
   useEffect(() => {

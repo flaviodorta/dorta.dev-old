@@ -44,10 +44,7 @@ export const useTypewriter = ({
           const allIndexesChar = getAllIndexes(textArr, char);
           if (textArr.includes(char)) {
             charElement = (
-              <span
-                key={nanoid()}
-                className='font-bold font-montserrat text-primary'
-              >
+              <span key={nanoid()} className='font-semibold text-primary'>
                 {char}
               </span>
             );

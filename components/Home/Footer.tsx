@@ -1,67 +1,39 @@
-import { Variants, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useRef } from 'react';
+import { useToggle } from '../../hooks/useToggle';
+import { useClearCursorStyle } from '../../hooks/useClearCursorStyle';
+import useSound from 'use-sound';
+import { useRecoilState } from 'recoil';
+import { cursorVariantAtom, soundAtom } from '../../recoil/atoms';
+import {
+  socialIconContainerVariants,
+  soundLabelVariants,
+} from '../../helpers/variants';
 
 import { TbNorthStar } from 'react-icons/tb';
 import GitHub from '../icons/Github';
 import LinkedIn from '../icons/Linkedin';
 import Instagram from '../icons/Instagram';
-import { useRecoilState } from 'recoil';
-import { cursorVariantAtom, soundAtom } from '../../recoil/atoms';
-import { motion } from 'framer-motion';
-import useSound from 'use-sound';
 
-const socialIconContainerVariants: Variants = {
-  close: (idx) => ({
-    y: '80%',
-    opacity: 0,
-    transition: {
-      duration: 0.25,
-      delay: (2 - idx) * 0.25,
-    },
-  }),
-  open: (idx) => ({
-    y: '0',
-    opacity: 1,
-    transition: {
-      duration: 0.15,
-      delay: idx * 0.15,
-    },
-  }),
-};
-
-const soundLabelVariants: Variants = {
-  hidden: {
-    x: 48,
-    y: 12,
-    opacity: 0,
-    transition: {
-      type: 'spring',
-      bounce: 0,
-      duration: 0.3,
-    },
-  },
-  visible: {
-    x: 56,
-    y: 12,
-    opacity: 1,
-    transition: {
-      type: 'spring',
-      bounce: 0,
-      duration: 0.55,
-    },
-  },
-};
-
-const Footer = () => {
-  const [shouldOpenSocialIcons, setShouldOpenSocialIcons] = useState(false);
+export const Footer = () => {
   const [sound, setSound] = useRecoilState(soundAtom);
-  const [soundLabel, setSoundLabel] = useState(false);
   const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
+  const [shouldOpenSocialIcons, toggleShouldOpenSocialIcons] = useToggle(false);
+  const [soundLabel, toggleSoundLabel] = useToggle(false);
+
+  const soundIconRef = useRef<HTMLDivElement>(null);
+  const openSocialsIconsIconRef = useRef<HTMLDivElement>(null);
+
   const [soundIconSoundPlay] = useSound('/sounds/hover-sound-icon.wav');
   const [soundOnPlay] = useSound('/sounds/turn-sound-on.wav');
   const [soundOffPlay] = useSound('/sounds/turn-sound-off.wav');
+  const [openSocialIconsSoundPlay] = useSound('/sounds/open-social-icons.wav');
+  const [hoverSocialIconsIconSoundPlay] = useSound(
+    '/sounds/hover-social-icons-icon.wav'
+  );
+  const [hoverSocialIconSoundPlay] = useSound('/sounds/hover-social-icon.wav');
+  const [clickSocialIconSoundPlay] = useSound('/sounds/click-social-icon.wav');
 
-  const toggleSocial = () => setShouldOpenSocialIcons((s) => !s);
   const toggleSound = () => {
     setSound({ ...sound, isPlay: !sound.isPlay });
     if (soundLabel === true) {
@@ -70,29 +42,56 @@ const Footer = () => {
       soundOnPlay();
     }
   };
-  const toggleSoundLabel = () => setSoundLabel((s) => !s);
 
-  console.log(sound);
+  const onMouseEnterSoundIcon = () => {
+    soundIconSoundPlay();
+    setCursorVariant('homeSoundIcon');
+    toggleSoundLabel();
+  };
+
+  const onMouseLeaveSoundIcon = () => {
+    setCursorVariant('default');
+    toggleSoundLabel();
+  };
+
+  const onClickSocialIcon = () => clickSocialIconSoundPlay();
+
+  const onMouseEnterSocialIcon = () => {
+    setCursorVariant('homeSocialIcon');
+    hoverSocialIconSoundPlay();
+  };
+
+  const onMouseLeaveSocialIcon = () => setCursorVariant('default');
+
+  const onClickOpenSocialsIconsIcon = () => {
+    toggleShouldOpenSocialIcons();
+    openSocialIconsSoundPlay();
+  };
+
+  const onMouseEnterOpenSocialsIconsIcon = () => {
+    setCursorVariant('homeOpenSocialIconsIcon');
+    hoverSocialIconsIconSoundPlay();
+  };
+
+  const onMouseLeaveOpenSocialsIconsIcon = () => setCursorVariant('default');
+
+  // useClearCursorStyle(soundIconRef, 'homeSoundIconHovering');
+  // useClearCursorStyle(openSocialsIconsIconRef, 'homeSoundIconHovering');
+
   return (
     <footer className='flex justify-between'>
       <div className='relative'>
         {/* sound icon */}
         <div
+          ref={soundIconRef}
           className={`w-10 h-[54px] overflow-hidden z-[41] relative -bottom-2 md:-bottom-8 flex items-center justify-center
         before:content-["aaaaaaaaaaa"] -before:top-[42px] before:left-0 before:text-4xl ${
           sound.isPlay ? 'before:decoration-wavy' : 'before:decoration-solid'
         }  before:decoration-white before:text-transparent before:underline
         before:animate-wave
         `}
-          onMouseEnter={() => {
-            soundIconSoundPlay();
-            setCursorVariant('homeSoundIcon');
-            toggleSoundLabel();
-          }}
-          onMouseLeave={() => {
-            setCursorVariant('default');
-            toggleSoundLabel();
-          }}
+          onMouseEnter={onMouseEnterSoundIcon}
+          onMouseLeave={onMouseLeaveSoundIcon}
           onClick={toggleSound}
         />
         <AnimatePresence>
@@ -115,45 +114,48 @@ const Footer = () => {
             {shouldOpenSocialIcons && (
               <>
                 <motion.div
-                  className='group w-8 h-8 flex justify-center items-center'
+                  className='social--icon-container group'
                   key={2}
                   variants={socialIconContainerVariants}
                   custom={2}
                   initial='close'
                   animate='open'
                   exit='close'
-                  onMouseEnter={() => setCursorVariant('homeSocialIcon')}
-                  onMouseLeave={() => setCursorVariant('default')}
+                  onClick={onClickSocialIcon}
+                  onMouseEnter={onMouseEnterSocialIcon}
+                  onMouseLeave={onMouseLeaveSocialIcon}
                 >
-                  <GitHub className='w-6 h-6 relative z-50 -bottom-4 brightness-50 group-hover:brightness-90 fill-white group-hover:fill-primary duration-300' />
+                  <GitHub className='social--icon' />
                 </motion.div>
 
                 <motion.div
-                  className='group w-8 h-8 flex justify-center items-center'
+                  className='social--icon-container group'
                   key={1}
                   variants={socialIconContainerVariants}
                   custom={1}
                   initial='close'
                   animate='open'
                   exit='close'
-                  onMouseEnter={() => setCursorVariant('homeSocialIcon')}
-                  onMouseLeave={() => setCursorVariant('default')}
+                  onClick={onClickSocialIcon}
+                  onMouseEnter={onMouseEnterSocialIcon}
+                  onMouseLeave={onMouseLeaveSocialIcon}
                 >
-                  <LinkedIn className='w-6 h-6 relative z-50 -bottom-4 brightness-50 group-hover:brightness-90 fill-white group-hover:fill-primary duration-300' />
+                  <LinkedIn className='social--icon' />
                 </motion.div>
 
                 <motion.div
-                  className='group w-8 h-8 flex justify-center items-center'
+                  className='social--icon-container group'
                   key={0}
                   variants={socialIconContainerVariants}
                   custom={0}
                   initial='close'
                   animate='open'
                   exit='close'
-                  onMouseEnter={() => setCursorVariant('homeSocialIcon')}
-                  onMouseLeave={() => setCursorVariant('default')}
+                  onClick={onClickSocialIcon}
+                  onMouseEnter={onMouseEnterSocialIcon}
+                  onMouseLeave={onMouseLeaveSocialIcon}
                 >
-                  <Instagram className='w-6 h-6 relative z-50 -bottom-4 brightness-50 group-hover:brightness-90 fill-white group-hover:fill-primary duration-300' />
+                  <Instagram className='social--icon' />
                 </motion.div>
               </>
             )}
@@ -161,13 +163,14 @@ const Footer = () => {
 
           <div className='group relative bottom-2 md:-bottom-4 mt-5 md:mt-0'>
             <div
+              ref={openSocialsIconsIconRef}
               className='md:w-14 md:h-9 flex items-end justify-center group-hover:bg-transparent'
-              onMouseEnter={() => setCursorVariant('homeOpenSocialIconsIcon')}
-              onMouseLeave={() => setCursorVariant('default')}
+              onMouseEnter={onMouseEnterOpenSocialsIconsIcon}
+              onMouseLeave={onMouseLeaveOpenSocialsIconsIcon}
+              onClick={onClickOpenSocialsIconsIcon}
             >
               <TbNorthStar
-                onClick={toggleSocial}
-                className={`w-8 h-8 group-hover:text-primary duration-300 transition-all ${
+                className={`w-8 h-8 group-hover:text-primary group-hover:scale-125 group-active:scale-50 duration-300 transition-all ${
                   shouldOpenSocialIcons ? 'rotate-90' : ''
                 }`}
               />
@@ -178,5 +181,3 @@ const Footer = () => {
     </footer>
   );
 };
-
-export default Footer;

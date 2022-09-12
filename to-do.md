@@ -4,13 +4,18 @@
 - typewriter with cursor effect
 - add redux with custom cursor logic for
 - add label sound
+- add sounds effects to home page
 
 # to do
 
-- add music/sounds effects
-- change sound icon to sin function
-- add three.js
+- change sound icon to sin function three.js
+- add three.js background
+- add intro transition to home
+- add intro animations to home elements
 - add mobile detect to change framer motion
+- add transition to growth cursor and pulse cursor (useDelay and useCycle to change variant)
+- add music in all pages
+- create all pages
 
 # to search
 

@@ -1,6 +1,4 @@
 import { atom } from 'recoil';
-import { recoilPersist } from 'recoil-persist';
-const { persistAtom } = recoilPersist();
 
 export type CursorVariants =
   | 'default'
@@ -9,14 +7,21 @@ export type CursorVariants =
   | 'homeTypewriter'
   | 'homeOpenSocialIconsIcon'
   | 'homeSocialIcon'
-  | 'homeMenuIcon'
+  | 'homeMenuIconEntering'
+  | 'homeMenuIconHovering'
+  | 'homeMenuIconClicked'
   | 'homeMenuOption'
   | 'homeSoundIcon'
   | 'homeLogo';
 
 export const cursorVariantAtom = atom({
-  key: 'cursor-variant',
+  key: 'cursorVariant',
   default: 'default' as CursorVariants,
+});
+
+export const hasCursorBgAtom = atom({
+  key: 'hasCursorBg',
+  default: true,
 });
 
 export const soundAtom = atom({

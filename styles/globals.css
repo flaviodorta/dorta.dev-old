@@ -33,4 +33,12 @@
   .sidebar--list-item {
     @apply flex items-center mb-8 space-x-6;
   }
+
+  .social--icon-container {
+    @apply w-8 h-8 flex justify-center items-center;
+  }
+
+  .social--icon {
+    @apply w-6 h-6 relative z-50 -bottom-4 brightness-50 group-hover:scale-125 group-active:scale-75 group-hover:brightness-90 fill-white group-hover:fill-primary duration-300;
+  }
 }

@@ -22,3 +22,12 @@ export const randomIntegerInterval = (val: number, variation: number) => {
   const min = val - variation;
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
+
+export const cancelableDelay = (cb: () => void, delay: number) => {
+  let timer: NodeJS.Timeout;
+  const timerCb = () => {
+    timer = setTimeout(cb, delay);
+  };
+  const clearTimer = () => clearTimeout(timer);
+  return [timerCb, clearTimer];
+};

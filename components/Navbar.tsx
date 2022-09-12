@@ -1,31 +1,79 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
+import { useHover } from '../hooks/useHover';
+import useSound from 'use-sound';
+import { useToggle } from '../hooks/useToggle';
+import { useClearCursorStyle } from '../hooks/useClearCursorStyle';
+import { useRecoilState } from 'recoil';
+import { cancelableDelay } from '../helpers/functions';
+import { cursorVariantAtom, hasCursorBgAtom } from '../recoil/atoms';
+
 import Image from 'next/image';
 import Logo from '../public/logo.svg';
-import Sidebar from './Sidebar';
-import { useRecoilState } from 'recoil';
-import { cursorVariantAtom } from '../recoil/atoms';
-import useSound from 'use-sound';
+import { Sidebar } from './Sidebar';
 
 export const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [hover, setHover] = useState(false);
-  const [openMenuSoundPlay] = useSound('/sounds/open-menu.wav');
-
-  const toggleMenu = () => {
-    setIsMenuOpen((s) => !s);
-    openMenuSoundPlay();
-  };
-  const toggleHover = () => setHover((s) => !s);
-
+  const [isMenuOpen, setIsMenuOpen] = useToggle(false);
   const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
+  const [__, setHasCursorBg] = useRecoilState(hasCursorBgAtom);
+  const menuIconRef = useRef<HTMLDivElement>(null);
+  const isMenuIconHover = useHover(menuIconRef);
+
+  const [openMenuSoundPlay] = useSound('/sounds/open-menu.wav');
+  const [hoverCloseMenuIconSoundPlay] = useSound(
+    '/sounds/hover-close-menu-icon.wav'
+  );
+  const [hoverOpenMenuIconSoundPlay] = useSound(
+    '/sounds/hover-open-menu-icon.wav'
+  );
+
+  const [setCursorToMenuIconHoveringDelay, clearCursorToMenuIconHoveringDelay] =
+    cancelableDelay(() => {
+      setCursorVariant('homeMenuIconHovering');
+    }, 150);
+
+  const menuSounds = () => {
+    if (isMenuOpen) {
+      hoverCloseMenuIconSoundPlay();
+    } else {
+      hoverOpenMenuIconSoundPlay();
+    }
+  };
+
+  const onClickMenuIcon = () => {
+    setIsMenuOpen();
+    openMenuSoundPlay();
+    setCursorVariant('homeMenuIconClicked');
+    setTimeout(() => setCursorVariant('homeMenuIconHovering'), 150);
+  };
+
+  const onMouseEnterMenuIcon = () => {
+    menuSounds();
+    setHasCursorBg(false);
+    setCursorVariant('homeMenuIconEntering');
+    setCursorToMenuIconHoveringDelay();
+  };
+
+  const onMouseLeaveMenuIcon = () => {
+    clearCursorToMenuIconHoveringDelay();
+    setCursorVariant('default');
+    setTimeout(() => setHasCursorBg(true), 250);
+  };
+
+  const onMouseDownMenuIcon = () => setCursorVariant('clicked');
+
+  const onMouseEnterLogo = () => setCursorVariant('homeLogo');
+
+  const onMouseLeaveLogo = () => setCursorVariant('default');
+
+  useClearCursorStyle(menuIconRef, 'homeMenuIconHovering');
 
   return (
     // logo icon
     <nav className='flex justify-between items-center text-white w-full'>
       <div
         className='relative select-none w-[120px] h-[30px] md:w-[160px] md:h-[40px]'
-        onMouseEnter={() => setCursorVariant('homeLogo')}
-        onMouseLeave={() => setCursorVariant('default')}
+        onMouseEnter={onMouseEnterLogo}
+        onMouseLeave={onMouseLeaveLogo}
       >
         <Image
           src={Logo}
@@ -37,36 +85,30 @@ export const Navbar = () => {
 
       {/* menu burger icon */}
       <div
+        ref={menuIconRef}
         className='relative group group-hover:bg-transparent z-40 flex items-center justify-end w-[70px] h-[70px]'
-        onClick={toggleMenu}
-        onMouseEnter={() => {
-          toggleHover();
-          setCursorVariant('homeMenuIcon');
-        }}
-        onMouseLeave={() => {
-          toggleHover();
-          setCursorVariant('default');
-        }}
-        onMouseDown={() => setCursorVariant('clicked')}
-        onMouseUp={() => setCursorVariant('homeMenuIcon')}
+        onClick={onClickMenuIcon}
+        onMouseEnter={onMouseEnterMenuIcon}
+        onMouseLeave={onMouseLeaveMenuIcon}
+        onMouseDown={onMouseDownMenuIcon}
       >
         <div className='relative'>
           <span
             className={`absolute -translate-x-full left-0 h-[4px] ${
-              hover ? 'bg-primary' : 'bg-white'
+              isMenuIconHover ? 'bg-primary' : 'bg-white'
             }
           ease-in-out ${
             isMenuOpen
               ? 'rotate-45 w-[30px] md:w-[35px] bottom-0 duration-500'
-              : 'w-[30px] md:w-[45px] bottom-[2.5px] duration-300'
+              : 'w-[30px] md:w-[45px] bottom-[2.5px] duration-[200ms]'
           }
         `}
           />
           <span
             className={`absolute -translate-x-full left-0  h-[4px] ${
-              hover ? 'bg-primary' : 'bg-white'
+              isMenuIconHover ? 'bg-primary' : 'bg-white'
             }
-          ease-in-out duration-500 ${
+          ease-in-out duration-[400ms] ${
             isMenuOpen
               ? '-rotate-45 w-[30px] md:w-[35px] bottom-0'
               : 'w-[20px] md:w-[30px] -bottom-[7.5px]'
@@ -75,9 +117,9 @@ export const Navbar = () => {
           />
           <span
             className={`absolute -translate-x-full  left-0  h-[4px] ${
-              hover ? 'bg-primary' : 'bg-white'
+              isMenuIconHover ? 'bg-primary' : 'bg-white'
             }
-          ease-in-out duration-700 ${
+          ease-in-out duration-[600ms] ${
             isMenuOpen
               ? '-rotate-45 w-[30px] md:w-[35px] bottom-0 opacity-0 duration-75'
               : 'w-[10px] md:w-[15px] -bottom-[16.5px]'

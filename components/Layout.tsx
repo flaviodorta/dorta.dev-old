@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { motion, Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useRecoilState } from 'recoil';
-import { cursorVariantAtom, CursorVariants } from '../recoil/atoms';
+import { cursorVariantAtom, hasCursorBgAtom } from '../recoil/atoms';
 import {
   cursorStyleVariants,
   cursorVariants,
@@ -12,13 +12,13 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Layout = ({ children }: Props) => {
+export const Layout = ({ children }: Props) => {
   const [mousePosition, setMousePosition] = useState<MousePosition>({
     x: 0,
     y: 0,
   });
-
   const [cursorVariant, setCursorVariant] = useRecoilState(cursorVariantAtom);
+  const [hasCursorBg, setHasCursorBg] = useRecoilState(hasCursorBgAtom);
 
   useEffect(() => {
     const mouseMove = (e) => {
@@ -32,7 +32,10 @@ const Layout = ({ children }: Props) => {
 
   return (
     // layout all site
-    <div className='bg-layout-2 cursor-none flex flex-col justify-between max-h-full h-screen text-white px-5  pb-4 md:px-6 md:pb-10 overflow-hidden'>
+    <div
+      onMouseEnter={() => setCursorVariant('default')}
+      className='bg-layout-2 cursor-none flex flex-col justify-between max-h-full h-screen text-white px-5  pb-4 md:px-6 md:pb-10 overflow-hidden'
+    >
       {/* cursor movement */}
       <motion.div
         variants={cursorVariants(mousePosition)}
@@ -51,13 +54,14 @@ const Layout = ({ children }: Props) => {
         <motion.div
           variants={cursorStyleVariants}
           animate={cursorVariant}
-          className='bg-primary -translate-x-1/2 -translate-y-1/2  rounded-[50%] pointer-events-none fixed top-0 left-0 hidden md:block'
+          className={`border-primary border-solid border-2 ${
+            hasCursorBg ? 'bg-primary' : 'bg-transparent'
+          } -translate-x-1/2 -translate-y-1/2  rounded-[50%] pointer-events-none fixed top-0 left-0 hidden md:block`}
         />
       </motion.div>
+
       {/* all sites components */}
       {children}
     </div>
   );
 };
-
-export default Layout;

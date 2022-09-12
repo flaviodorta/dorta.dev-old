@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import { cursorVariantAtom } from '../../recoil/atoms';
 import { Typewriter } from '../Typewriter/Typewriter';
 
-const Content = () => {
+export const Content = () => {
   const strings = [
     'modern & innovative digital solutions',
     'e-commerces, web systems, landing pages, blogs & much more',
@@ -12,6 +12,8 @@ const Content = () => {
   ];
 
   const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
+
+  const headingRef = useRef<HTMLHeadingElement>(null);
 
   return (
     <main className='mx-auto px-2 select-none font-anton md:-translate-y-24 md:-translate-x-24'>
@@ -34,5 +36,3 @@ const Content = () => {
     </main>
   );
 };
-
-export default Content;
