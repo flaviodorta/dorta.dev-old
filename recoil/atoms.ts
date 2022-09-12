@@ -11,6 +11,8 @@ export type CursorVariants =
   | 'homeMenuIconHovering'
   | 'homeMenuIconClicked'
   | 'homeMenuOption'
+  | 'homeMenuOptionEntering'
+  | 'homeMenuOptionHovering'
   | 'homeSoundIcon'
   | 'homeLogo';
 

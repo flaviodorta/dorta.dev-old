@@ -85,6 +85,16 @@ export const cursorVariants: (mousePosition: MousePosition) => Variants = (
         };
       }
 
+      if (
+        variant === 'homeMenuOptionEntering' ||
+        variant === 'homeMenuOptionHovering'
+      ) {
+        return {
+          ...props,
+          mixBlendMode: 'difference',
+        };
+      }
+
       if (variant === 'homeSocialIcon') {
       }
 
@@ -150,15 +160,15 @@ export const cursorStyleVariants: Variants = {
       repeat: Infinity,
     },
   },
-  homeMenuIconClicked: {
-    width: 8 * 5,
-    height: 8 * 5,
-    transition: {
-      type: 'tween',
-      duration: 0.15,
-      ease: [1.5, 1.6, 1.4, 0.97],
-    },
-  },
+  // homeMenuIconClicked: {
+  //   width: 8 * 5,
+  //   height: 8 * 5,
+  //   transition: {
+  //     type: 'tween',
+  //     duration: 0.15,
+  //     ease: [1.5, 1.6, 1.4, 0.97],
+  //   },
+  // },
   homeSoundIcon: {
     width: [8 * 6, 8 * 7, 8 * 6],
     height: [8 * 6, 8 * 7, 8 * 6],
@@ -196,6 +206,25 @@ export const cursorStyleVariants: Variants = {
       type: 'tween',
       duration: 0.35,
       ease: [0.92, 0.96, 0.98, 0.94],
+      repeat: Infinity,
+    },
+  },
+  homeMenuOptionEntering: {
+    width: 32,
+    height: 32,
+    transition: {
+      type: 'tween',
+      duration: 0.15,
+      ease: 'easeIn',
+    },
+  },
+  homeMenuOptionHovering: {
+    width: [32, 40, 32],
+    height: [32, 40, 32],
+    transition: {
+      type: 'tween',
+      duration: 0.3,
+      ease: [1.5, 1.6, 1.4, 0.97],
       repeat: Infinity,
     },
   },

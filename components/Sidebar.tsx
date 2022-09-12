@@ -7,6 +7,7 @@ import {
   linkNameVariants,
   menuItemVariants,
 } from '../helpers/variants';
+import { cancelableDelay } from '../helpers/functions';
 
 interface MenuItemProps {
   isMenuOpen: boolean;
@@ -17,6 +18,25 @@ interface MenuItemProps {
 const MenuItem = ({ isMenuOpen, custom, linkName }: MenuItemProps) => {
   const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
   const [hoverMenuOptionSoundPlay] = useSound('/sounds/hover-menu-option.wav');
+
+  const [
+    setCursorToMenuOptionHoveringDelay,
+    clearCursorToMenuOptionHoveringDelay,
+  ] = cancelableDelay(() => {
+    setCursorVariant('homeMenuOptionHovering');
+    clearCursorToMenuOptionHoveringDelay();
+  }, 150);
+
+  const onMouseEnterMenuOption = () => {
+    hoverMenuOptionSoundPlay();
+    setCursorVariant('homeMenuOptionEntering');
+    setCursorToMenuOptionHoveringDelay();
+  };
+
+  const onMouseLeaveMenuOption = () => {
+    clearCursorToMenuOptionHoveringDelay();
+    setCursorVariant('default');
+  };
 
   return (
     <AnimatePresence>
@@ -32,15 +52,12 @@ const MenuItem = ({ isMenuOpen, custom, linkName }: MenuItemProps) => {
         >
           <div className='text-4xl md:text-5xl font-anton group'>
             <motion.h1
+              layout
               variants={linkNameVariants}
               whileHover={isMenuOpen ? 'hovered' : ''}
-              layout
-              className='font-anton uppercase tracking-[2px] group-hover:text-primary transition-colors duration-200'
-              onMouseEnter={() => {
-                setCursorVariant('homeMenuOption');
-                hoverMenuOptionSoundPlay();
-              }}
-              onMouseLeave={() => setCursorVariant('default')}
+              className='font-anton select-none uppercase tracking-[2px] group-hover:text-primary transition-colors duration-200'
+              onMouseEnter={onMouseEnterMenuOption}
+              onMouseLeave={onMouseLeaveMenuOption}
             >
               <span className='hidden -left-5 absolute delay-500 group-hover:inline-block group-hover:text-primary transition-all duration-500'>
                 &#123;

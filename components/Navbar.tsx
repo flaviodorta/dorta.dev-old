@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useHover } from '../hooks/useHover';
 import useSound from 'use-sound';
 import { useToggle } from '../hooks/useToggle';
@@ -29,6 +29,7 @@ export const Navbar = () => {
   const [setCursorToMenuIconHoveringDelay, clearCursorToMenuIconHoveringDelay] =
     cancelableDelay(() => {
       setCursorVariant('homeMenuIconHovering');
+      clearCursorToMenuIconHoveringDelay();
     }, 150);
 
   const menuSounds = () => {
@@ -39,11 +40,18 @@ export const Navbar = () => {
     }
   };
 
+  // useEffect(() => {
+  //   if (!isMenuIconHover && _ === 'homeMenuIconClicked') {
+  //     console.log(_);
+  //     clearCursorToMenuIconHoveringDelay();
+  //   }
+  // }, [isMenuIconHover, _]);
+
   const onClickMenuIcon = () => {
     setIsMenuOpen();
     openMenuSoundPlay();
-    setCursorVariant('homeMenuIconClicked');
-    setTimeout(() => setCursorVariant('homeMenuIconHovering'), 150);
+    // setCursorVariant('homeMenuIconClicked');
+    // setCursorToMenuIconHoveringDelay();
   };
 
   const onMouseEnterMenuIcon = () => {
@@ -58,8 +66,6 @@ export const Navbar = () => {
     setCursorVariant('default');
     setTimeout(() => setHasCursorBg(true), 250);
   };
-
-  const onMouseDownMenuIcon = () => setCursorVariant('clicked');
 
   const onMouseEnterLogo = () => setCursorVariant('homeLogo');
 
@@ -90,7 +96,7 @@ export const Navbar = () => {
         onClick={onClickMenuIcon}
         onMouseEnter={onMouseEnterMenuIcon}
         onMouseLeave={onMouseLeaveMenuIcon}
-        onMouseDown={onMouseDownMenuIcon}
+        // onMouseDown={onMouseDownMenuIcon}
       >
         <div className='relative'>
           <span

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useRecoilState } from 'recoil';
 import { cursorVariantAtom, hasCursorBgAtom } from '../recoil/atoms';
@@ -7,6 +7,8 @@ import {
   cursorVariants,
   MousePosition,
 } from '../helpers/variants';
+import { useHover } from '../hooks/useHover';
+import { useClearCursorStyle } from '../hooks/useClearCursorStyle';
 
 interface Props {
   children: React.ReactNode;
@@ -19,6 +21,8 @@ export const Layout = ({ children }: Props) => {
   });
   const [cursorVariant, setCursorVariant] = useRecoilState(cursorVariantAtom);
   const [hasCursorBg, setHasCursorBg] = useRecoilState(hasCursorBgAtom);
+
+  const layoutRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const mouseMove = (e) => {
@@ -33,6 +37,7 @@ export const Layout = ({ children }: Props) => {
   return (
     // layout all site
     <div
+      ref={layoutRef}
       onMouseEnter={() => setCursorVariant('default')}
       className='bg-layout-2 cursor-none flex flex-col justify-between max-h-full h-screen text-white px-5  pb-4 md:px-6 md:pb-10 overflow-hidden'
     >
@@ -48,7 +53,7 @@ export const Layout = ({ children }: Props) => {
           bounce: 0.05,
         }}
         whileTap={{ scale: 0.5 }}
-        className='z-[100] h-fit w-fit rounded-[50%] pointer-events-none fixed top-0 left-0 hidden md:block'
+        className='z-[1000] h-fit w-fit rounded-[50%] pointer-events-none fixed top-0 left-0 hidden md:block'
       >
         {/* cursor styles */}
         <motion.div
