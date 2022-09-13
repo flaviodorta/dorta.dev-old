@@ -1,3 +1,4 @@
+import { motion, Variants } from 'framer-motion';
 import React, { useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import { cursorVariantAtom } from '../../recoil/atoms';
@@ -15,24 +16,64 @@ export const Content = () => {
 
   const headingRef = useRef<HTMLHeadingElement>(null);
 
+  const headingVariants: Variants = {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+      },
+    },
+  };
+
+  const typewriterVariants: Variants = {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+      },
+    },
+  };
+
+  const contentContainerVariants: Variants = {
+    initial: {},
+    animate: {
+      transition: {
+        staggerChildren: 0.8,
+      },
+    },
+  };
+
   return (
-    <main className='mx-auto px-2 select-none font-anton md:-translate-y-24 md:-translate-x-24'>
-      <h1
+    <motion.main
+      variants={contentContainerVariants}
+      initial='initial'
+      animate='animate'
+      className='mx-auto px-2 select-none font-anton md:-translate-y-24 md:-translate-x-24'
+    >
+      <motion.h1
+        variants={headingVariants}
         className='text-6xl md:text-7xl mb-4'
         onMouseEnter={() => setCursorVariant('homeHeading')}
         onMouseLeave={() => setCursorVariant('default')}
       >
         creative developer
         <span className='text-primary'>.</span>
-      </h1>
+      </motion.h1>
 
-      <p
+      <motion.p
+        variants={typewriterVariants}
         className='font-montserrat absolute md:text-2xl'
         onMouseEnter={() => setCursorVariant('homeTypewriter')}
         onMouseLeave={() => setCursorVariant('default')}
       >
-        <Typewriter texts={strings} />
-      </p>
-    </main>
+        <Typewriter texts={strings} initialDelay={2400} />
+      </motion.p>
+    </motion.main>
   );
 };

@@ -11,6 +11,7 @@ export const Typewriter = ({
   typeSpeed = 70,
   deleteSpeed = 150,
   delaySpeed = 2000,
+  initialDelay = null,
   cursorStyle = '|',
   cursor = true,
 }: ComponentProps) => {
@@ -19,6 +20,7 @@ export const Typewriter = ({
     typeSpeed,
     deleteSpeed,
     delaySpeed,
+    initialDelay,
   });
 
   return (

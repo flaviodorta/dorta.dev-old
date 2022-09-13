@@ -19,22 +19,22 @@ const MenuItem = ({ isMenuOpen, custom, linkName }: MenuItemProps) => {
   const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
   const [hoverMenuOptionSoundPlay] = useSound('/sounds/hover-menu-option.wav');
 
-  const [
-    setCursorToMenuOptionHoveringDelay,
-    clearCursorToMenuOptionHoveringDelay,
-  ] = cancelableDelay(() => {
-    setCursorVariant('homeMenuOptionHovering');
-    clearCursorToMenuOptionHoveringDelay();
-  }, 150);
+  // const [
+  //   setCursorToMenuOptionHoveringDelay,
+  //   clearCursorToMenuOptionHoveringDelay,
+  // ] = cancelableDelay(() => {
+  //   setCursorVariant('homeMenuOptionHovering');
+  //   clearCursorToMenuOptionHoveringDelay();
+  // }, 150);
 
   const onMouseEnterMenuOption = () => {
     hoverMenuOptionSoundPlay();
-    setCursorVariant('homeMenuOptionEntering');
-    setCursorToMenuOptionHoveringDelay();
+    setCursorVariant('homeMenuOption');
+    // setCursorToMenuOptionHoveringDelay();
   };
 
   const onMouseLeaveMenuOption = () => {
-    clearCursorToMenuOptionHoveringDelay();
+    // clearCursorToMenuOptionHoveringDelay();
     setCursorVariant('default');
   };
 

@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { Layout } from '../components/Layout';
 import { isMobile } from 'react-device-detect';
 
-import '../styles/globals.css';
+import '../../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
   console.log(isMobile);

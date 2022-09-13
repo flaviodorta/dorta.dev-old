@@ -15,6 +15,7 @@ export interface TypewriterProps {
   typeSpeed?: number;
   deleteSpeed?: number;
   delaySpeed?: number;
+  initialDelay?: number | null;
 }
 
 export const useTypewriter = ({
@@ -22,15 +23,28 @@ export const useTypewriter = ({
   typeSpeed = 70,
   deleteSpeed = 150,
   delaySpeed = 2000,
+  initialDelay = null,
 }: TypewriterProps): (string | ReactElement)[] => {
-  const [{ isDeleting, speed, text, countText, indexWord }, dispatch] =
-    useReducer(reducer, {
-      isDeleting: false,
-      speed: randomIntegerInterval(typeSpeed, 50),
-      text: [],
-      countText: 0,
-      indexWord: 0,
-    });
+  const initialState = initialDelay
+    ? {
+        isDeleting: false,
+        speed: randomIntegerInterval(typeSpeed, 50),
+        text: [],
+        countText: 0,
+        indexWord: 0,
+        isInitialDelay: true,
+      }
+    : {
+        isDeleting: false,
+        speed: randomIntegerInterval(typeSpeed, 50),
+        text: [],
+        countText: 0,
+        indexWord: 0,
+      };
+  const [
+    { isDeleting, speed, text, countText, indexWord, isInitialDelay },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   const firstRun = useRef(true);
 
@@ -77,31 +91,45 @@ export const useTypewriter = ({
     []
   );
 
+  console.log(isInitialDelay);
+
   const handleTyping = useCallback(() => {
     const indexText = countText % texts.length;
     const textArr = turnTextCharInReactElement(texts[indexText], '&');
     const word = textArr[indexWord];
 
-    if (!isDeleting) {
-      dispatch({
-        type: 'TYPING',
-        payload: word,
-        speed: randomIntegerInterval(typeSpeed, 25),
-      });
+    if (isInitialDelay && initialDelay) {
+      const wait = (ms) => {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      };
 
-      if (indexWord === textArr.length - 1) {
-        dispatch({
-          type: 'TRANSITION_FINAL',
-          payload: randomIntegerInterval(delaySpeed, 500),
-        });
-      }
+      (async function () {
+        await wait(initialDelay);
+        console.log('cu');
+        dispatch({ type: 'IS_INITIAL_DELAY' });
+      })();
     } else {
-      dispatch({
-        type: 'DELETING',
-        speed: randomIntegerInterval(deleteSpeed, 30),
-      });
+      if (!isDeleting) {
+        dispatch({
+          type: 'TYPING',
+          payload: word,
+          speed: randomIntegerInterval(typeSpeed, 25),
+        });
 
-      if (isEqual(text, [])) dispatch({ type: 'TRANSITION_START' });
+        if (indexWord === textArr.length - 1) {
+          dispatch({
+            type: 'TRANSITION_FINAL',
+            payload: randomIntegerInterval(delaySpeed, 500),
+          });
+        }
+      } else {
+        dispatch({
+          type: 'DELETING',
+          speed: randomIntegerInterval(deleteSpeed, 30),
+        });
+
+        if (isEqual(text, [])) dispatch({ type: 'TRANSITION_START' });
+      }
     }
   }, [
     isDeleting,
@@ -113,10 +141,13 @@ export const useTypewriter = ({
     delaySpeed,
     deleteSpeed,
     typeSpeed,
+    initialDelay,
+    isInitialDelay,
   ]);
 
   useEffect(() => {
     let typing;
+    console.log(firstRun.current);
     if (!firstRun.current) {
       typing = setTimeout(handleTyping, speed);
     }
@@ -136,13 +167,15 @@ export type State = {
   isDeleting: boolean;
   countText: number;
   indexWord: number;
+  isInitialDelay?: boolean;
 };
 
 export type Action =
   | { type: 'TRANSITION_FINAL'; payload: number }
   | { type: 'TYPING'; payload: string | ReactElement; speed: number }
   | { type: 'DELETING'; speed: number }
-  | { type: 'TRANSITION_START' };
+  | { type: 'TRANSITION_START' }
+  | { type: 'IS_INITIAL_DELAY' };
 
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -171,6 +204,11 @@ export function reducer(state: State, action: Action): State {
         ...state,
         isDeleting: false,
         countText: state.countText + 1,
+      };
+    case 'IS_INITIAL_DELAY':
+      return {
+        ...state,
+        isInitialDelay: false,
       };
     default:
       return state;

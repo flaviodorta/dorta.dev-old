@@ -78,17 +78,18 @@ export const cursorVariants: (mousePosition: MousePosition) => Variants = (
         border: '0px solid red',
       };
 
-      if (variant === 'homeHeading' || variant === 'homeTypewriter') {
+      if (
+        variant === 'homeHeading' ||
+        variant === 'homeTypewriter' ||
+        variant === 'homeLogo'
+      ) {
         return {
           ...props,
           mixBlendMode: 'darken',
         };
       }
 
-      if (
-        variant === 'homeMenuOptionEntering' ||
-        variant === 'homeMenuOptionHovering'
-      ) {
+      if (variant === 'homeMenuOption') {
         return {
           ...props,
           mixBlendMode: 'difference',
@@ -107,125 +108,100 @@ export const cursorStyleVariants: Variants = {
   default: {
     width: 8,
     height: 8,
+    backgroundColor: '#ed0c32',
+    border: '2px solid #ed0c32',
     transition: {
       type: 'tween',
       duration: 0.25,
-      ease: [0.92, 0.96, 0.98, 0.94],
+      ease: 'easeIn',
     },
   },
   homeHeading: {
     width: 8 * 14,
     height: 8 * 14,
+    backgroundColor: '#ed0c32',
+    border: '2px solid #ed0c32',
     transition: {
       type: 'tween',
       duration: 0.15,
-      ease: [1.5, 1.6, 1.4, 0.97],
+      ease: 'easeIn',
+    },
+  },
+  homeOpenSocialIconsIcon: {
+    width: 8 * 7,
+    height: 8 * 7,
+    backgroundColor: 'transparent',
+    border: '2px solid #ed0c32',
+    transition: {
+      type: 'tween',
+      duration: 0.25,
+      ease: 'easeIn',
     },
   },
   homeSocialIcon: {
-    width: [8 * 4, 10 * 4, 8 * 4],
-    height: [8 * 4, 10 * 4, 8 * 4],
+    width: 10 * 4,
+    height: 10 * 4,
+    backgroundColor: 'transparent',
+    border: '2px solid #ed0c32',
     transition: {
       type: 'tween',
-      duration: 0.3,
-      ease: [1.5, 1.6, 1.4, 0.97],
-      repeat: Infinity,
+      duration: 0.25,
+      ease: 'easeIn',
     },
   },
   homeTypewriter: {
     width: 32,
     height: 32,
-    transition: {
-      type: 'tween',
-      duration: 0.15,
-      ease: [1.5, 1.6, 1.4, 0.97],
-    },
-  },
-  homeMenuIconEntering: {
-    width: 8 * 7,
-    height: 8 * 7,
+    backgroundColor: '#ed0c32',
+    border: '2px solid #ed0c32',
     transition: {
       type: 'tween',
       duration: 0.15,
       ease: 'easeIn',
     },
   },
-  homeMenuIconHovering: {
-    width: [8 * 7, 8 * 8, 8 * 7],
-    height: [8 * 7, 8 * 8, 8 * 7],
+  homeMenuIcon: {
+    width: 8 * 7,
+    height: 8 * 7,
+    backgroundColor: 'transparent',
+    border: '2px solid #ed0c32',
     transition: {
       type: 'tween',
-      duration: 0.3,
-      ease: [1.5, 1.6, 1.4, 0.97],
-      repeat: Infinity,
+      duration: 0.15,
+      ease: 'easeIn',
     },
   },
-  // homeMenuIconClicked: {
-  //   width: 8 * 5,
-  //   height: 8 * 5,
-  //   transition: {
-  //     type: 'tween',
-  //     duration: 0.15,
-  //     ease: [1.5, 1.6, 1.4, 0.97],
-  //   },
-  // },
   homeSoundIcon: {
-    width: [8 * 6, 8 * 7, 8 * 6],
-    height: [8 * 6, 8 * 7, 8 * 6],
+    width: 8 * 7,
+    height: 8 * 7,
+    backgroundColor: 'transparent',
+    border: '2px solid #ed0c32',
     transition: {
       type: 'tween',
-      duration: 0.5,
-      ease: [1.5, 1.6, 1.4, 0.97],
-      repeat: Infinity,
-    },
-  },
-  homeOpenSocialIconsIcon: {
-    width: [8 * 6, 8 * 7, 8 * 6],
-    height: [8 * 6, 8 * 7, 8 * 6],
-    transition: {
-      type: 'tween',
-      duration: 0.3,
-      ease: [1.5, 1.6, 1.4, 0.97],
-      repeat: Infinity,
+      duration: 0.25,
+      ease: 'easeIn',
     },
   },
   homeLogo: {
-    width: [8, 16, 8],
-    height: [8, 16, 8],
+    width: 16,
+    height: 16,
+    backgroundColor: '#ed0c32',
+    border: '2px solid #ed0c32',
     transition: {
       type: 'tween',
-      duration: 0.5,
-      ease: [1.5, 1.6, 1.4, 0.97],
-      repeat: Infinity,
+      duration: 0.25,
+      ease: 'easeIn',
     },
   },
   homeMenuOption: {
-    width: [8, 16, 8],
-    height: [8, 16, 8],
-    transition: {
-      type: 'tween',
-      duration: 0.35,
-      ease: [0.92, 0.96, 0.98, 0.94],
-      repeat: Infinity,
-    },
-  },
-  homeMenuOptionEntering: {
     width: 32,
     height: 32,
+    backgroundColor: '#ed0c32',
+    border: '2px solid #ed0c32',
     transition: {
       type: 'tween',
       duration: 0.15,
       ease: 'easeIn',
-    },
-  },
-  homeMenuOptionHovering: {
-    width: [32, 40, 32],
-    height: [32, 40, 32],
-    transition: {
-      type: 'tween',
-      duration: 0.3,
-      ease: [1.5, 1.6, 1.4, 0.97],
-      repeat: Infinity,
     },
   },
 };

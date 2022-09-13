@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useRecoilState } from 'recoil';
-import { cursorVariantAtom, hasCursorBgAtom } from '../recoil/atoms';
+import { cursorVariantAtom } from '../recoil/atoms';
 import {
   cursorStyleVariants,
   cursorVariants,
   MousePosition,
 } from '../helpers/variants';
-import { useHover } from '../hooks/useHover';
-import { useClearCursorStyle } from '../hooks/useClearCursorStyle';
 
 interface Props {
   children: React.ReactNode;
@@ -20,7 +18,6 @@ export const Layout = ({ children }: Props) => {
     y: 0,
   });
   const [cursorVariant, setCursorVariant] = useRecoilState(cursorVariantAtom);
-  const [hasCursorBg, setHasCursorBg] = useRecoilState(hasCursorBgAtom);
 
   const layoutRef = useRef<HTMLDivElement>(null);
 
@@ -59,9 +56,7 @@ export const Layout = ({ children }: Props) => {
         <motion.div
           variants={cursorStyleVariants}
           animate={cursorVariant}
-          className={`border-primary border-solid border-2 ${
-            hasCursorBg ? 'bg-primary' : 'bg-transparent'
-          } -translate-x-1/2 -translate-y-1/2  rounded-[50%] pointer-events-none fixed top-0 left-0 hidden md:block`}
+          className='-translate-x-1/2 -translate-y-1/2  rounded-[50%] pointer-events-none fixed top-0 left-0 hidden md:block'
         />
       </motion.div>
 

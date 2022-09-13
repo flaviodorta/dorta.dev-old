@@ -7,23 +7,14 @@ export type CursorVariants =
   | 'homeTypewriter'
   | 'homeOpenSocialIconsIcon'
   | 'homeSocialIcon'
-  | 'homeMenuIconEntering'
-  | 'homeMenuIconHovering'
-  | 'homeMenuIconClicked'
+  | 'homeMenuIcon'
   | 'homeMenuOption'
-  | 'homeMenuOptionEntering'
-  | 'homeMenuOptionHovering'
   | 'homeSoundIcon'
   | 'homeLogo';
 
 export const cursorVariantAtom = atom({
   key: 'cursorVariant',
   default: 'default' as CursorVariants,
-});
-
-export const hasCursorBgAtom = atom({
-  key: 'hasCursorBg',
-  default: true,
 });
 
 export const soundAtom = atom({
