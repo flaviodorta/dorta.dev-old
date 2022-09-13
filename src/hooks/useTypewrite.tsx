@@ -151,7 +151,6 @@ export const useTypewriter = ({
     if (!firstRun.current) {
       typing = setTimeout(handleTyping, speed);
     }
-
     return () => {
       clearTimeout(typing);
       firstRun.current = false;

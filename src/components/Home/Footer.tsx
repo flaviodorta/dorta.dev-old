@@ -81,20 +81,22 @@ export const Footer = () => {
     animate: {
       opacity: 1,
       transition: {
-        delay: 1.5,
+        delay: 1.6,
         duration: 0.8,
       },
     },
   };
 
   return (
-    <footer className='flex justify-between'>
+    <motion.footer
+      variants={footerIconsVariants}
+      initial='initial'
+      animate='animate'
+      className='flex justify-between'
+    >
       <div className='relative'>
         {/* sound icon */}
-        <motion.div
-          variants={footerIconsVariants}
-          initial='initial'
-          animate='animate'
+        <div
           ref={soundIconRef}
           className={`w-10 h-[54px] overflow-hidden z-[41] relative -bottom-2 md:-bottom-8 flex items-center justify-center
         before:content-["aaaaaaaaaaa"] -before:top-[42px] before:left-0 before:text-4xl ${
@@ -174,10 +176,7 @@ export const Footer = () => {
           </AnimatePresence>
 
           <div className='group relative bottom-2 md:-bottom-4 mt-5 md:mt-0'>
-            <motion.div
-              variants={footerIconsVariants}
-              initial='initial'
-              animate='animate'
+            <div
               ref={openSocialsIconsIconRef}
               className='md:w-14 md:h-9 flex items-end justify-center group-hover:bg-transparent'
               onMouseEnter={onMouseEnterOpenSocialsIconsIcon}
@@ -189,10 +188,10 @@ export const Footer = () => {
                   shouldOpenSocialIcons ? 'rotate-90' : ''
                 }`}
               />
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };

@@ -14,8 +14,6 @@ export const Content = () => {
 
   const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
 
-  const headingRef = useRef<HTMLHeadingElement>(null);
-
   const headingVariants: Variants = {
     initial: {
       opacity: 0,
@@ -36,28 +34,17 @@ export const Content = () => {
       opacity: 1,
       transition: {
         duration: 0.8,
-      },
-    },
-  };
-
-  const contentContainerVariants: Variants = {
-    initial: {},
-    animate: {
-      transition: {
-        staggerChildren: 0.8,
+        delay: 2.4,
       },
     },
   };
 
   return (
-    <motion.main
-      variants={contentContainerVariants}
-      initial='initial'
-      animate='animate'
-      className='mx-auto px-2 select-none font-anton md:-translate-y-24 md:-translate-x-24'
-    >
+    <main className='mx-auto px-2 select-none font-anton md:-translate-y-24 md:-translate-x-24'>
       <motion.h1
         variants={headingVariants}
+        initial='initial'
+        animate='animate'
         className='text-6xl md:text-7xl mb-4'
         onMouseEnter={() => setCursorVariant('homeHeading')}
         onMouseLeave={() => setCursorVariant('default')}
@@ -68,12 +55,14 @@ export const Content = () => {
 
       <motion.p
         variants={typewriterVariants}
+        initial='initial'
+        animate='animate'
         className='font-montserrat absolute md:text-2xl'
         onMouseEnter={() => setCursorVariant('homeTypewriter')}
         onMouseLeave={() => setCursorVariant('default')}
       >
-        <Typewriter texts={strings} initialDelay={2400} />
+        <Typewriter texts={strings} initialDelay={4800} />
       </motion.p>
-    </motion.main>
+    </main>
   );
 };

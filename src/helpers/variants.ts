@@ -116,9 +116,54 @@ export const cursorStyleVariants: Variants = {
       ease: 'easeIn',
     },
   },
+  homeLogo: {
+    width: 16,
+    height: 16,
+    backgroundColor: '#ed0c32',
+    border: '2px solid #ed0c32',
+    transition: {
+      type: 'tween',
+      duration: 0.25,
+      ease: 'easeIn',
+    },
+  },
+  homeMenuIcon: {
+    width: 8 * 7,
+    height: 8 * 7,
+    backgroundColor: 'transparent',
+    border: '2px solid #ed0c32',
+    transition: {
+      type: 'tween',
+      duration: 0.15,
+      ease: 'easeIn',
+    },
+    transitionEnd: {},
+  },
+  homeMenuOption: {
+    width: 32,
+    height: 32,
+    backgroundColor: '#ed0c32',
+    border: '2px solid #ed0c32',
+    transition: {
+      type: 'tween',
+      duration: 0.15,
+      ease: 'easeIn',
+    },
+  },
   homeHeading: {
     width: 8 * 14,
     height: 8 * 14,
+    backgroundColor: '#ed0c32',
+    border: '2px solid #ed0c32',
+    transition: {
+      type: 'tween',
+      duration: 0.15,
+      ease: 'easeIn',
+    },
+  },
+  homeTypewriter: {
+    width: 32,
+    height: 32,
     backgroundColor: '#ed0c32',
     border: '2px solid #ed0c32',
     transition: {
@@ -149,28 +194,6 @@ export const cursorStyleVariants: Variants = {
       ease: 'easeIn',
     },
   },
-  homeTypewriter: {
-    width: 32,
-    height: 32,
-    backgroundColor: '#ed0c32',
-    border: '2px solid #ed0c32',
-    transition: {
-      type: 'tween',
-      duration: 0.15,
-      ease: 'easeIn',
-    },
-  },
-  homeMenuIcon: {
-    width: 8 * 7,
-    height: 8 * 7,
-    backgroundColor: 'transparent',
-    border: '2px solid #ed0c32',
-    transition: {
-      type: 'tween',
-      duration: 0.15,
-      ease: 'easeIn',
-    },
-  },
   homeSoundIcon: {
     width: 8 * 7,
     height: 8 * 7,
@@ -179,28 +202,6 @@ export const cursorStyleVariants: Variants = {
     transition: {
       type: 'tween',
       duration: 0.25,
-      ease: 'easeIn',
-    },
-  },
-  homeLogo: {
-    width: 16,
-    height: 16,
-    backgroundColor: '#ed0c32',
-    border: '2px solid #ed0c32',
-    transition: {
-      type: 'tween',
-      duration: 0.25,
-      ease: 'easeIn',
-    },
-  },
-  homeMenuOption: {
-    width: 32,
-    height: 32,
-    backgroundColor: '#ed0c32',
-    border: '2px solid #ed0c32',
-    transition: {
-      type: 'tween',
-      duration: 0.15,
       ease: 'easeIn',
     },
   },
