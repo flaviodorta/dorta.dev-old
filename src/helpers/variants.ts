@@ -69,40 +69,38 @@ export interface MousePosition {
 
 export const cursorVariants: (mousePosition: MousePosition) => Variants = (
   mousePosition: MousePosition
-) => {
-  return {
-    default: (variant: CursorVariants) => {
-      const props = {
-        x: mousePosition.x - 4,
-        y: mousePosition.y - 4,
-        border: '0px solid red',
+) => ({
+  default: (variant: CursorVariants) => {
+    const props = {
+      x: mousePosition.x - 4,
+      y: mousePosition.y - 4,
+      border: '0px solid red',
+    };
+
+    if (
+      variant === 'homeHeading' ||
+      variant === 'homeTypewriter' ||
+      variant === 'homeLogo'
+    ) {
+      return {
+        ...props,
+        mixBlendMode: 'darken',
       };
+    }
 
-      if (
-        variant === 'homeHeading' ||
-        variant === 'homeTypewriter' ||
-        variant === 'homeLogo'
-      ) {
-        return {
-          ...props,
-          mixBlendMode: 'darken',
-        };
-      }
+    if (variant === 'homeMenuOption') {
+      return {
+        ...props,
+        mixBlendMode: 'difference',
+      };
+    }
 
-      if (variant === 'homeMenuOption') {
-        return {
-          ...props,
-          mixBlendMode: 'difference',
-        };
-      }
+    if (variant === 'homeSocialIcon') {
+    }
 
-      if (variant === 'homeSocialIcon') {
-      }
-
-      return props;
-    },
-  };
-};
+    return props;
+  },
+});
 
 export const cursorStyleVariants: Variants = {
   default: {
@@ -245,6 +243,62 @@ export const soundLabelVariants: Variants = {
       type: 'spring',
       bounce: 0,
       duration: 0.55,
+    },
+  },
+};
+
+export const introLogoVariant: Variants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      type: 'spring',
+      duration: 1.5,
+      bounce: 0,
+    },
+  },
+};
+
+export const introLoadingBar: (width: number) => Variants = (
+  width: number
+) => ({
+  animate: { opacity: 1, width: width },
+  exit: { display: 'none' },
+});
+
+export const introTransitionLayerLoadingToButton: Variants = {
+  initial: {
+    width: 0,
+  },
+  animate: {
+    width: 104,
+    transition: {
+      duration: 0.6,
+      ease: 'easeInOut',
+    },
+  },
+};
+
+export const introEnterButtonText: Variants = {
+  initial: {
+    opacity: 0,
+    border: '0px solid rgb(237,12,50)',
+  },
+  animate: {
+    opacity: 1,
+    border: '1px solid rgb(237,12,50)',
+    transition: {
+      duration: 0.6,
+      delay: 1,
+    },
+  },
+  whileTap: {
+    scale: 1.3,
+    transition: {
+      duration: 0.2,
+      ease: 'easeInOut',
     },
   },
 };

@@ -1,15 +1,9 @@
-import { Navbar } from '../components/Navbar';
-import { Content } from '../components/Home/Content';
-import { Footer } from '../components/Home/Footer';
+import { Intro } from '../components/Intro';
 
 export default function Home() {
   return (
     <>
-      <Navbar />
-
-      <Content />
-
-      <Footer />
+      <Intro />
     </>
   );
 }

@@ -7,7 +7,6 @@ import {
   linkNameVariants,
   menuItemVariants,
 } from '../helpers/variants';
-import { cancelableDelay } from '../helpers/functions';
 
 interface MenuItemProps {
   isMenuOpen: boolean;
@@ -19,22 +18,12 @@ const MenuItem = ({ isMenuOpen, custom, linkName }: MenuItemProps) => {
   const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
   const [hoverMenuOptionSoundPlay] = useSound('/sounds/hover-menu-option.wav');
 
-  // const [
-  //   setCursorToMenuOptionHoveringDelay,
-  //   clearCursorToMenuOptionHoveringDelay,
-  // ] = cancelableDelay(() => {
-  //   setCursorVariant('homeMenuOptionHovering');
-  //   clearCursorToMenuOptionHoveringDelay();
-  // }, 150);
-
   const onMouseEnterMenuOption = () => {
     hoverMenuOptionSoundPlay();
     setCursorVariant('homeMenuOption');
-    // setCursorToMenuOptionHoveringDelay();
   };
 
   const onMouseLeaveMenuOption = () => {
-    // clearCursorToMenuOptionHoveringDelay();
     setCursorVariant('default');
   };
 
