@@ -23,3 +23,11 @@ export const soundAtom = atom({
     isPlay: true,
   },
 });
+
+export const transitionAtom = atom({
+  key: 'transition',
+  default: {
+    shouldTransition: false,
+    transitionToPage: '',
+  },
+});

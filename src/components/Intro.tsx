@@ -3,7 +3,7 @@ import { useEffect, useReducer, useRef, useState } from 'react';
 import { useToggle } from '../hooks/useToggle';
 import { useRecoilState } from 'recoil';
 import { randomIntegerInterval } from '../helpers/functions';
-import { cursorVariantAtom } from '../recoil/atoms';
+import { cursorVariantAtom, transitionAtom } from '../recoil/atoms';
 import {
   introTransitionLayerLoadingToButton,
   introEnterButtonText,
@@ -12,16 +12,25 @@ import {
 } from '../helpers/variants';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import Logo from '../../public/logo.svg';
 
 export const Intro = () => {
   const [width, setWidth] = useState(0);
   const [isLoading, setIsLoading] = useToggle(true);
-  const [isEnterBurronAnimationStart, setIsEnterButtonAnimationStart] =
+  const [isEnterButtonAnimationStart, setIsEnterButtonAnimationStart] =
     useState(false);
   const [isEnterBurronAnimationComplete, setIsEnterButtonAnimationComplete] =
     useState(false);
   const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
+  const [shouldTransitionPage, setShouldTransitionPage] =
+    useRecoilState(transitionAtom);
+
+  const onClickEnterButton = () =>
+    setShouldTransitionPage({
+      shouldTransition: true,
+      transitionToPage: 'HomePage',
+    });
 
   const delay = randomIntegerInterval(80, 30);
 
@@ -30,6 +39,7 @@ export const Intro = () => {
   const onMouseLeaveEnterButton = () =>
     isEnterBurronAnimationComplete ? setCursorVariant('default') : {};
 
+  // loading effect
   useEffect(() => {
     let timer;
     console.log(width);
@@ -42,17 +52,6 @@ export const Intro = () => {
         console.log('is loading: ', isLoading);
       }, 2000);
     }
-    // if (isEnterBurronAnimationStart) {
-    //   timer = setTimeout(() => {
-    //     dispatch({
-    //       type: 'SET_FUNCTION_ENTER_BUTTON',
-    //       payload: {
-    //         onEnter: () => setCursorVariant('homeMenuOption'),
-    //         onLeave: () => setCursorVariant('default'),
-    //       },
-    //     });
-    //   }, 1600);
-    // }
 
     return () => {
       clearTimeout(timer);
@@ -101,21 +100,25 @@ export const Intro = () => {
             onAnimationComplete={() => setIsEnterButtonAnimationStart(true)}
             className='absolute h-[18px] -left-1 bg-layout-2 font-share-tech uppercase flex items-center justify-center'
           >
-            {isEnterBurronAnimationStart && (
-              <motion.span
-                variants={introEnterButtonText}
-                initial='initial'
-                animate={isLoading ? '' : 'animate'}
-                whileTap='whileTap'
-                onAnimationComplete={() =>
-                  setIsEnterButtonAnimationComplete(true)
-                }
-                onMouseEnter={onMouseEnterEnterButton}
-                onMouseLeave={onMouseLeaveEnterButton}
-                className='text-primary hover:text-white hover:bg-primary duration-200 transition-colors ease-linear w-[100px] h-7 flex items-center justify-center'
-              >
-                Enter
-              </motion.span>
+            {isEnterButtonAnimationStart && (
+              <Link href='/home'>
+                <motion.span
+                  variants={introEnterButtonText}
+                  initial='initial'
+                  animate={isLoading ? '' : 'animate'}
+                  whileTap='whileTap'
+                  onAnimationComplete={() =>
+                    setIsEnterButtonAnimationComplete(true)
+                  }
+                  onClick={onClickEnterButton}
+                  onMouseEnter={onMouseEnterEnterButton}
+                  onHoverStart={onMouseEnterEnterButton}
+                  onMouseLeave={onMouseLeaveEnterButton}
+                  className='text-primary hover:text-white hover:bg-primary duration-200 transition-colors ease-linear w-[100px] h-7 flex items-center justify-center'
+                >
+                  Enter
+                </motion.span>
+              </Link>
             )}
           </motion.div>
         </div>

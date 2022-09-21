@@ -1,5 +1,5 @@
 import { motion, Variants } from 'framer-motion';
-import React, { useRef } from 'react';
+import React from 'react';
 import { useRecoilState } from 'recoil';
 import { cursorVariantAtom } from '../../recoil/atoms';
 import { Typewriter } from '../Typewriter/Typewriter';
@@ -21,7 +21,7 @@ export const Content = () => {
     animate: {
       opacity: 1,
       transition: {
-        duration: 0.8,
+        duration: 3,
       },
     },
   };
