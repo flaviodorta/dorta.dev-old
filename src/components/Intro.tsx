@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useToggle } from '../hooks/useToggle';
 import { useRecoilState } from 'recoil';
 import { randomIntegerInterval } from '../helpers/functions';
-import { cursorVariantAtom, transitionAtom } from '../recoil/atoms';
+import { cursorVariantAtom } from '../recoil/atoms';
 import {
   introTransitionLayerLoadingToButton,
   introEnterButtonText,
@@ -11,9 +11,8 @@ import {
   introLogoVariant,
 } from '../helpers/variants';
 
-import Image from 'next/image';
 import Link from 'next/link';
-import Logo from '../../public/logo.svg';
+import { Logo } from './Logo';
 
 export const Intro = () => {
   const [width, setWidth] = useState(0);
@@ -23,14 +22,8 @@ export const Intro = () => {
   const [isEnterBurronAnimationComplete, setIsEnterButtonAnimationComplete] =
     useState(false);
   const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
-  const [shouldTransitionPage, setShouldTransitionPage] =
-    useRecoilState(transitionAtom);
 
-  const onClickEnterButton = () =>
-    setShouldTransitionPage({
-      shouldTransition: true,
-      transitionToPage: 'HomePage',
-    });
+  const onClickEnterButton = () => {};
 
   const delay = randomIntegerInterval(80, 30);
 
@@ -60,67 +53,57 @@ export const Intro = () => {
 
   return (
     <AnimatePresence>
-      <div className='h-full w-full flex flex-col space-y-4 -translate-y-6 -translate-x-1 md:-translate-y-20 md:-translate-x-6 items-center justify-center'>
-        <motion.div
-          variants={introLogoVariant}
-          initial='initial'
-          animate='animate'
-          className='relative select-none w-[120px] h-[30px] md:w-[200px] md:h-[80px]'
-        >
-          <Image
-            src={Logo}
-            className='h-full w-[120px] sm:h-64'
-            layout='fill'
-            alt='Logo'
-          />
-        </motion.div>
-        <div
-          className={`relative w-[100px] h-[18px] flex items-center bg-none justify-start border-primary border-[1px] outline-none select-none`}
-        >
-          <motion.div
-            variants={introLoadingBar(width)}
-            animate='animate'
-            exit='exit'
-            className='h-[18px] bg-primary relative outline-offset-4'
+      <div className='h-full w-full flex items-center justify-center'>
+        <div className='flex flex-col space-y-4 items-center justify-center xl:-translate-x-12 xl:-translate-y-12 2xl:-translate-x-16 2xl:-translate-y-16'>
+          <Logo />
+          <div
+            className={`relative w-[100px] h-[18px] flex items-center bg-none justify-start border-primary border-[1px] outline-none select-none`}
           >
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 8 }}
-              className='absolute font-share-tech top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs'
+            <motion.div
+              variants={introLoadingBar(width)}
+              animate='animate'
+              exit='exit'
+              className='h-[18px] bg-primary relative outline-offset-4'
             >
-              {width}%
-            </motion.span>
-          </motion.div>
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 8 }}
+                className='absolute font-share-tech top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs'
+              >
+                {width}%
+              </motion.span>
+            </motion.div>
 
-          <motion.div
-            variants={introTransitionLayerLoadingToButton}
-            initial='initial'
-            animate={isLoading ? '' : 'animate'}
-            onAnimationComplete={() => setIsEnterButtonAnimationStart(true)}
-            className='absolute h-[18px] -left-1 bg-layout-2 font-share-tech uppercase flex items-center justify-center'
-          >
-            {isEnterButtonAnimationStart && (
-              <Link href='/home'>
-                <motion.span
-                  variants={introEnterButtonText}
-                  initial='initial'
-                  animate={isLoading ? '' : 'animate'}
-                  whileTap='whileTap'
-                  onAnimationComplete={() =>
-                    setIsEnterButtonAnimationComplete(true)
-                  }
-                  onClick={onClickEnterButton}
-                  onMouseEnter={onMouseEnterEnterButton}
-                  onHoverStart={onMouseEnterEnterButton}
-                  onMouseLeave={onMouseLeaveEnterButton}
-                  className='text-primary hover:text-white hover:bg-primary duration-200 transition-colors ease-linear w-[100px] h-7 flex items-center justify-center'
-                >
-                  Enter
-                </motion.span>
-              </Link>
-            )}
-          </motion.div>
+            <motion.div
+              variants={introTransitionLayerLoadingToButton}
+              initial='initial'
+              animate={isLoading ? '' : 'animate'}
+              onAnimationComplete={() => setIsEnterButtonAnimationStart(true)}
+              className='absolute h-[30px] -left-1 bg-layout-2 font-share-tech uppercase flex items-center justify-center'
+            >
+              {isEnterButtonAnimationStart && (
+                <Link href='/home'>
+                  <motion.span
+                    variants={introEnterButtonText}
+                    initial='initial'
+                    animate={isLoading ? '' : 'animate'}
+                    whileTap='whileTap'
+                    onAnimationComplete={() =>
+                      setIsEnterButtonAnimationComplete(true)
+                    }
+                    onClick={onClickEnterButton}
+                    onMouseEnter={onMouseEnterEnterButton}
+                    onHoverStart={onMouseEnterEnterButton}
+                    onMouseLeave={onMouseLeaveEnterButton}
+                    className='text-primary hover:text-white hover:bg-primary duration-200 transition-colors ease-linear w-[100px] h-7 flex items-center justify-center'
+                  >
+                    Enter
+                  </motion.span>
+                </Link>
+              )}
+            </motion.div>
+          </div>
         </div>
       </div>
     </AnimatePresence>

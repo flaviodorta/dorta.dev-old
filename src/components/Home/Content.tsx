@@ -40,7 +40,7 @@ export const Content = () => {
   };
 
   return (
-    <main className='mx-auto px-2 select-none font-anton md:-translate-y-24 md:-translate-x-24'>
+    <main className='mx-auto px-2 select-none font-anton md:-translate-y-16 md:-translate-x-16  2xl:-translate-y-24 2xl:-translate-x-24'>
       <motion.h1
         variants={headingVariants}
         initial='initial'
@@ -61,7 +61,7 @@ export const Content = () => {
         onMouseEnter={() => setCursorVariant('homeTypewriter')}
         onMouseLeave={() => setCursorVariant('default')}
       >
-        <Typewriter texts={strings} initialDelay={4800} />
+        {/* <Typewriter texts={strings} initialDelay={4800} /> */}
       </motion.p>
     </main>
   );

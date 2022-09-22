@@ -302,3 +302,121 @@ export const introEnterButtonText: Variants = {
     },
   },
 };
+
+export const initialAnimationPageVariants: Variants = {
+  initial: {
+    opacity: 0,
+    transition: {
+      delay: 3,
+    },
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+      ease: 'easeInOut',
+    },
+  },
+  exit: {
+    opacity: 0,
+  },
+};
+
+export const transitionFirstBackgroundVariants: (
+  isTransitionPageToPage: boolean
+) => Variants = (isTransitionPageToPage: boolean) => ({
+  initial: isTransitionPageToPage
+    ? {
+        bottom: 0,
+        height: 0,
+      }
+    : {
+        top: 0,
+        height: '100vh',
+      },
+  animate: isTransitionPageToPage
+    ? {
+        bottom: 0,
+        height: '102vh',
+        transition: {
+          type: 'spring',
+          bounce: 0,
+          delay: 0.3,
+        },
+      }
+    : {
+        top: 0,
+        height: '100vh',
+        transition: {
+          duration: 1,
+        },
+      },
+  exit: {
+    top: '-3%',
+    height: 0,
+    transition: {
+      type: 'spring',
+      bounce: 0,
+      delay: 0.15,
+    },
+  },
+});
+
+export const transitionSecondBackgroundVariants: (
+  isTransitionPageToPage: boolean
+) => Variants = (isTransitionPageToPage: boolean) => ({
+  initial: isTransitionPageToPage
+    ? {
+        bottom: 0,
+        height: 0,
+      }
+    : {
+        top: 0,
+        height: '100vh',
+      },
+  animate: isTransitionPageToPage
+    ? {
+        bottom: 0,
+        height: '105vh',
+        transition: {
+          type: 'spring',
+          bounce: 0,
+          delay: 0.12,
+        },
+      }
+    : {
+        top: 0,
+        height: '100vh',
+        transition: {
+          duration: 1,
+        },
+      },
+  exit: {
+    top: 0,
+    height: 0,
+    transition: {
+      type: 'spring',
+      bounce: 0,
+      delay: 0.34,
+    },
+  },
+});
+
+export const optionVariants: Variants = {
+  initial: {
+    y: 100,
+  },
+  animate: {
+    y: -50,
+    transition: {
+      type: 'spring',
+      bounce: 0,
+    },
+  },
+  exit: {
+    transition: {
+      type: 'spring',
+      bounce: 0,
+    },
+  },
+};

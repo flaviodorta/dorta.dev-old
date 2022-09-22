@@ -24,10 +24,22 @@ export const soundAtom = atom({
   },
 });
 
-export const transitionAtom = atom({
+export const lastUrlAtom = atom({
+  key: 'lastUrl',
+  default: '',
+});
+
+export type State = {
+  isTransitioning: boolean;
+  shouldRenderBg: boolean;
+  shouldRenderPage: boolean;
+};
+
+export const transitionAtom = atom<State>({
   key: 'transition',
   default: {
-    shouldTransition: false,
-    transitionToPage: '',
+    isTransitioning: true,
+    shouldRenderBg: true,
+    shouldRenderPage: false,
   },
 });

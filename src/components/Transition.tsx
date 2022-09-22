@@ -1,140 +1,108 @@
 import { AnimatePresence, motion, Variants } from 'framer-motion';
-import React, { useEffect, useReducer, useState } from 'react';
+import { useRouter } from 'next/router';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+} from 'react';
+import { useRecoilState } from 'recoil';
 import useSound from 'use-sound';
+import {
+  optionVariants,
+  transitionFirstBackgroundVariants,
+  transitionSecondBackgroundVariants,
+} from '../helpers/variants';
+import { transitionActions } from '../recoil/actions';
+import { lastUrlAtom, transitionAtom } from '../recoil/atoms';
+import { Logo } from './Logo';
 
-export const transitionFirstBackgroundVariants: Variants = {
-  initial: {
-    bottom: 0,
-    height: 0,
-  },
-  animate: {
-    bottom: 0,
-    height: '100vh',
-    transition: {
-      type: 'spring',
-      bounce: 0,
-      delay: 0.22,
-    },
-  },
-  exit: {
-    top: 0,
-    height: 0,
-    transition: {
-      type: 'spring',
-      bounce: 0,
-      delay: 0.15,
-    },
-  },
-};
-
-export const transitionSecondBackgroundVariants: Variants = {
-  initial: {
-    bottom: 0,
-    height: 0,
-  },
-  animate: {
-    bottom: 0,
-    height: '100vh',
-    transition: {
-      type: 'spring',
-      bounce: 0,
-      delay: 0.15,
-    },
-  },
-  exit: {
-    top: 0,
-    height: 0,
-    transition: {
-      type: 'spring',
-      bounce: 0,
-      delay: 0.22,
-    },
-  },
-};
-
-export const TransitionPageToPageLayout = ({
+export const TransitionLayout = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const [{ isTransitioning, shouldRenderBg, shouldRenderPage }, dispatch] =
-    useReducer(reducer, {
-      isTransitioning: true,
-      shouldRenderBg: true,
-      shouldRenderPage: false,
-    });
+  const [
+    { isTransitioning, shouldRenderBg, shouldRenderPage },
+    setTransitionState,
+  ] = useRecoilState(transitionAtom);
 
-  const [onAnimationStartTransitionSound] = useSound(
-    '/sounds/page-transition-enter'
-  );
+  const isTransitionPageToPage = useRef(false);
+
+  // const [onAnimationStartTransitionSound] = useSound(
+  //   '/sounds/page-transition-enter.wav'
+  // );
   const [onAnimationExitTransitionSound] = useSound(
-    '/sounds/page-transition-exit'
+    '/sounds/page-transition-exit.mp3'
   );
+
+  const { pathname } = useRouter();
 
   useEffect(() => {
     let timer;
+    const transitionDelay = isTransitionPageToPage.current ? 1950 : 3500;
 
     if (isTransitioning && shouldRenderBg)
-      timer = setTimeout(() => dispatch({ type: 'TRANSITION_EXIT' }), 3000);
+      timer = setTimeout(
+        () => setTransitionState(transitionActions.exitTransition()),
+        transitionDelay
+      );
 
     if (!isTransitioning && shouldRenderBg)
-      timer = setTimeout(() => dispatch({ type: 'SHOULD_RENDER_PAGE' }), 1400);
+      timer = setTimeout(
+        () => setTransitionState(transitionActions.shouldRenderPage()),
+        1400
+      );
 
     return () => {
       clearTimeout(timer);
     };
   }, [isTransitioning, shouldRenderBg]);
 
-  const optionVariants: Variants = {
-    initial: {
-      y: 100,
-    },
-    animate: {
-      y: -50,
-      transition: {
-        type: 'spring',
-        bounce: 0,
-      },
-    },
-    exit: {
-      transition: {
-        type: 'spring',
-        bounce: 0,
-      },
-    },
-  };
-
-  if (isTransitioning || shouldRenderBg) {
+  if (pathname !== '/' && (isTransitioning || shouldRenderBg)) {
     return (
-      <div className='w-full h-full relative'>
+      <div className='w-screen h-screen relative'>
         <AnimatePresence>
           {isTransitioning && (
             <>
               <motion.div
-                className='bg-layout-2 absolute flex justify-center items-center w-screen h-full z-50 left-0 overflow-hidden'
-                variants={transitionFirstBackgroundVariants}
+                className='bg-layout-2 absolute flex justify-center items-center h-full z-50 left-0 right-0 overflow-hidden'
+                variants={transitionFirstBackgroundVariants(
+                  isTransitionPageToPage.current
+                )}
                 initial='initial'
                 animate='animate'
                 exit='exit'
-                onAnimationStart={() => onAnimationStartTransitionSound()}
-                onAnimationComplete={() => onAnimationExitTransitionSound()}
+                onAnimationStart={() => onAnimationExitTransitionSound()}
+                onAnimationEnd={() => onAnimationExitTransitionSound()}
               >
-                <motion.h1
-                  variants={optionVariants}
-                  initial='initial'
-                  animate='animate'
-                  exit='exit'
-                  className='font-anton text-9xl uppercase absolute'
-                >
-                  Motion<span className='text-primary'>.</span>
-                </motion.h1>
+                {isTransitionPageToPage.current ? (
+                  <motion.h1
+                    variants={optionVariants}
+                    initial='initial'
+                    animate='animate'
+                    exit='exit'
+                    className='font-anton text-7xl md:text-9xl uppercase absolute'
+                  >
+                    {pathname.substring(1)}
+                    <span className='text-primary'>.</span>
+                  </motion.h1>
+                ) : (
+                  <Logo className='-translate-y-6 xl:-translate-x-12 xl:-translate-y-20 2xl:-translate-x-16 2xl:-translate-y-20' />
+                )}
               </motion.div>
               <motion.div
-                className='bg-primary absolute w-screen h-full z-40 left-0'
-                variants={transitionSecondBackgroundVariants}
+                className='bg-primary absolute w-screen z-40 left-0 right-0'
+                variants={transitionSecondBackgroundVariants(
+                  isTransitionPageToPage.current
+                )}
                 initial='initial'
                 animate='animate'
                 exit='exit'
+                // onAnimationComplete={() => {
+                //   onAnimationExitTransitionSound();
+                // }}
               />
             </>
           )}
@@ -143,36 +111,9 @@ export const TransitionPageToPageLayout = ({
     );
   }
 
-  if (shouldRenderPage) {
+  if (pathname === '/' || shouldRenderPage) {
+    isTransitionPageToPage.current = true;
+
     return <div className='w-full h-full'>{children}</div>;
   }
 };
-
-export type State = {
-  isTransitioning: boolean;
-  shouldRenderBg: boolean;
-  shouldRenderPage: boolean;
-};
-
-export type Action =
-  | { type: 'TRANSITION_EXIT' }
-  | { type: 'SHOULD_RENDER_PAGE' };
-
-export function reducer(state: State, action: Action): State {
-  switch (action.type) {
-    case 'TRANSITION_EXIT':
-      return {
-        isTransitioning: false,
-        shouldRenderBg: true,
-        shouldRenderPage: false,
-      };
-    case 'SHOULD_RENDER_PAGE':
-      return {
-        isTransitioning: false,
-        shouldRenderBg: false,
-        shouldRenderPage: true,
-      };
-    default:
-      return state;
-  }
-}

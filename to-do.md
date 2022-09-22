@@ -6,17 +6,19 @@
 - add label sound
 - add sounds effects to home page
 - add intro animations to home elements
+- add intro transition to home
 
 # to do
 
-- add intro transition to home
-- add three.js background
-- change sound icon to sin function three.js
+- add transiton to url enter
+- add transition page to page
 - create all pages
 - add music in all pages
-- make icon follow mouse when hover
 - add mobile detect to change framer motion
 - fix some effects when is mobile
+- add three.js background
+- make icon follow mouse when hover
+- change sound icon to sin function three.js
 
 # to search
 
