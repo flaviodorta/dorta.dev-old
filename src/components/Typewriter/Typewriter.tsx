@@ -9,7 +9,7 @@ interface ComponentProps extends TypewriterProps {
 export const Typewriter = ({
   texts = [],
   typeSpeed = 70,
-  deleteSpeed = 150,
+  deleteSpeed = 100,
   delaySpeed = 2000,
   initialDelay = null,
   cursorStyle = '|',
@@ -25,7 +25,7 @@ export const Typewriter = ({
 
   return (
     <>
-      <span>{text}</span>
+      <span className='font-share-tech'>{text}</span>
       {cursor && <Cursor cursorStyle={cursorStyle} />}
     </>
   );

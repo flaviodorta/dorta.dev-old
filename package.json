@@ -9,8 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-three/drei": "^9.39.0",
+    "@react-three/fiber": "^8.9.0",
     "@reduxjs/toolkit": "^1.8.5",
+    "@types/howler": "^2.2.7",
     "framer-motion": "^7.2.1",
+    "howler": "^2.2.3",
     "lodash": "^4.17.21",
     "next": "12.2.5",
     "next-sanity": "^0.8.4",
@@ -21,6 +25,7 @@
     "react-redux": "^8.0.2",
     "recoil": "^0.7.5",
     "recoil-persist": "^4.2.0",
+    "three": "^0.146.0",
     "typeit-react": "^2.6.0",
     "typewriter-effect": "^2.19.0",
     "use-sound": "^4.0.1",
@@ -29,6 +34,7 @@
   "devDependencies": {
     "@types/node": "^18.7.14",
     "@types/react": "^18.0.18",
+    "@types/three": "^0.144.0",
     "autoprefixer": "^10.4.8",
     "eslint": "8.23.0",
     "eslint-config-next": "12.2.5",

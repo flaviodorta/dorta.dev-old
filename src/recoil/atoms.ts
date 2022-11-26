@@ -43,3 +43,8 @@ export const transitionAtom = atom<State>({
     shouldRenderPage: false,
   },
 });
+
+export const shouldStartBackgroundSoundAtom = atom({
+  key: 'shouldStartBackgroundSound',
+  default: false,
+});

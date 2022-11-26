@@ -1,4 +1,7 @@
 import { Html, Head, Main, NextScript } from 'next/document';
+import { useRecoilState } from 'recoil';
+import { useSoundsContext } from '../context/SoundsContext';
+import { shouldStartBackgroundSoundAtom } from '../recoil/atoms';
 
 export default function Document() {
   return (

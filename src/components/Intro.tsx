@@ -3,7 +3,10 @@ import { useEffect, useState } from 'react';
 import { useToggle } from '../hooks/useToggle';
 import { useRecoilState } from 'recoil';
 import { randomIntegerInterval } from '../helpers/functions';
-import { cursorVariantAtom } from '../recoil/atoms';
+import {
+  cursorVariantAtom,
+  transitionAtom,
+} from '../recoil/atoms';
 import {
   introTransitionLayerLoadingToButton,
   introEnterButtonText,
@@ -13,24 +16,34 @@ import {
 
 import Link from 'next/link';
 import { Logo } from './Logo';
+import { transitionActions } from '../recoil/actions';
 
 export const Intro = () => {
   const [width, setWidth] = useState(0);
   const [isLoading, setIsLoading] = useToggle(true);
   const [isEnterButtonAnimationStart, setIsEnterButtonAnimationStart] =
     useState(false);
-  const [isEnterBurronAnimationComplete, setIsEnterButtonAnimationComplete] =
+  const [isEnterButtonAnimationComplete, setIsEnterButtonAnimationComplete] =
     useState(false);
   const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
+  const [__, setTransitionState] = useRecoilState(transitionAtom);
+  // const [___, setShouldStartBackgroundSound] = useRecoilState(
+  //   shouldStartBackgroundSoundAtom
+  // );
 
-  const onClickEnterButton = () => {};
+  const onClickEnterButton = () => {
+    setTimeout(
+      () => setTransitionState(transitionActions.startTransition()),
+      500
+    );
+  };
 
   const delay = randomIntegerInterval(80, 30);
 
   const onMouseEnterEnterButton = () =>
-    isEnterBurronAnimationComplete ? setCursorVariant('homeMenuOption') : {};
+    isEnterButtonAnimationComplete ? setCursorVariant('homeMenuOption') : {};
   const onMouseLeaveEnterButton = () =>
-    isEnterBurronAnimationComplete ? setCursorVariant('default') : {};
+    isEnterButtonAnimationComplete ? setCursorVariant('default') : {};
 
   // loading effect
   useEffect(() => {
@@ -69,9 +82,9 @@ export const Intro = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 8 }}
-                className='absolute font-share-tech top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs'
+                className='absolute font-share-tech top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xs flex items-center'
               >
-                {width}%
+                <span className='relative top-[1px]'>{width}%</span>
               </motion.span>
             </motion.div>
 
@@ -84,7 +97,7 @@ export const Intro = () => {
             >
               {isEnterButtonAnimationStart && (
                 <Link href='/home'>
-                  <motion.span
+                  <motion.div
                     variants={introEnterButtonText}
                     initial='initial'
                     animate={isLoading ? '' : 'animate'}
@@ -98,8 +111,8 @@ export const Intro = () => {
                     onMouseLeave={onMouseLeaveEnterButton}
                     className='text-primary hover:text-white hover:bg-primary duration-200 transition-colors ease-linear w-[100px] h-7 flex items-center justify-center'
                   >
-                    Enter
-                  </motion.span>
+                    <span className='relative top-[1px]'>Enter</span>
+                  </motion.div>
                 </Link>
               )}
             </motion.div>

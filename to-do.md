@@ -7,15 +7,15 @@
 - add sounds effects to home page
 - add intro animations to home elements
 - add intro transition to home
+- add transiton to url enter
+- add transition page to page
 
 # to do
 
-- add transiton to url enter
-- add transition page to page
+- fix some effects when is mobile
+- add mobile detect to change framer motion
 - create all pages
 - add music in all pages
-- add mobile detect to change framer motion
-- fix some effects when is mobile
 - add three.js background
 - make icon follow mouse when hover
 - change sound icon to sin function three.js

@@ -9,6 +9,7 @@ import { cursorVariantAtom } from '../recoil/atoms';
 import Image from 'next/image';
 import Logo from '../../public/logo.svg';
 import { Sidebar } from './Sidebar';
+import { useSoundsContext } from '../context/SoundsContext';
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useToggle(false);
@@ -16,13 +17,11 @@ export const Navbar = () => {
   const menuIconRef = useRef<HTMLDivElement>(null);
   const isMenuIconHover = useHover(menuIconRef);
 
-  const [openMenuSoundPlay] = useSound('/sounds/open-menu.wav');
-  const [hoverCloseMenuIconSoundPlay] = useSound(
-    '/sounds/hover-close-menu-icon.wav'
-  );
-  const [hoverOpenMenuIconSoundPlay] = useSound(
-    '/sounds/hover-open-menu-icon.wav'
-  );
+  const {
+    openMenuSoundPlay,
+    hoverCloseMenuIconSoundPlay,
+    hoverOpenMenuIconSoundPlay,
+  } = useSoundsContext();
 
   const menuSounds = () => {
     if (isMenuOpen) {

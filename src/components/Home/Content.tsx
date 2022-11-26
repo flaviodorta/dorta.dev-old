@@ -61,7 +61,7 @@ export const Content = () => {
         onMouseEnter={() => setCursorVariant('homeTypewriter')}
         onMouseLeave={() => setCursorVariant('default')}
       >
-        {/* <Typewriter texts={strings} initialDelay={4800} /> */}
+        <Typewriter texts={strings} initialDelay={4800} />
       </motion.p>
     </main>
   );

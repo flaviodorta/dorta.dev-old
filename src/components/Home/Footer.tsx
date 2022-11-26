@@ -13,6 +13,7 @@ import { TbNorthStar } from 'react-icons/tb';
 import GitHub from '../icons/Github';
 import LinkedIn from '../icons/Linkedin';
 import Instagram from '../icons/Instagram';
+import { useSoundsContext } from '../../context/SoundsContext';
 
 export const Footer = () => {
   const [sound, setSound] = useRecoilState(soundAtom);
@@ -23,15 +24,15 @@ export const Footer = () => {
   const soundIconRef = useRef<HTMLDivElement>(null);
   const openSocialsIconsIconRef = useRef<HTMLDivElement>(null);
 
-  const [soundIconSoundPlay] = useSound('/sounds/hover-sound-icon.wav');
-  const [soundOnPlay] = useSound('/sounds/turn-sound-on.wav');
-  const [soundOffPlay] = useSound('/sounds/turn-sound-off.wav');
-  const [openSocialIconsSoundPlay] = useSound('/sounds/open-social-icons.wav');
-  const [hoverSocialIconsIconSoundPlay] = useSound(
-    '/sounds/hover-social-icons-icon.wav'
-  );
-  const [hoverSocialIconSoundPlay] = useSound('/sounds/hover-social-icon.wav');
-  const [clickSocialIconSoundPlay] = useSound('/sounds/click-social-icon.wav');
+  const {
+    soundIconSoundPlay,
+    soundOnPlay,
+    soundOffPlay,
+    openSocialIconsSoundPlay,
+    hoverSocialIconSoundPlay,
+    hoverSocialIconsIconSoundPlay,
+    clickSocialIconSoundPlay,
+  } = useSoundsContext();
 
   const toggleSound = () => {
     setSound({ ...sound, isPlay: !sound.isPlay });
@@ -98,7 +99,7 @@ export const Footer = () => {
         {/* sound icon */}
         <div
           ref={soundIconRef}
-          className={`w-10 h-[54px] overflow-hidden z-[41] relative -bottom-2 md:-bottom-8 flex items-center justify-center
+          className={`w-10 h-[90px] overflow-hidden z-[41] relative -bottom-2 md:-bottom-8 flex items-center justify-center
         before:content-["aaaaaaaaaaa"] -before:top-[42px] before:left-0 before:text-4xl ${
           sound.isPlay ? 'before:decoration-wavy' : 'before:decoration-solid'
         }  before:decoration-white before:text-transparent before:underline

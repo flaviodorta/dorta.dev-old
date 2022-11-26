@@ -30,7 +30,7 @@ export const menuItemVariants: Variants = {
 
 export const backgroundVariants: Variants = {
   open: {
-    clipPath: 'circle(1000px at 384px 0px)',
+    clipPath: 'circle(1300px at 384px 0px)',
     background: '#121212',
     transition: {
       duration: 1.8,

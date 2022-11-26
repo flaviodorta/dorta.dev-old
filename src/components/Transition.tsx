@@ -1,21 +1,15 @@
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { useRouter } from 'next/router';
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useRef,
-} from 'react';
+import { useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import useSound from 'use-sound';
+import { useSoundsContext } from '../context/SoundsContext';
 import {
   optionVariants,
   transitionFirstBackgroundVariants,
   transitionSecondBackgroundVariants,
 } from '../helpers/variants';
 import { transitionActions } from '../recoil/actions';
-import { lastUrlAtom, transitionAtom } from '../recoil/atoms';
+import { transitionAtom } from '../recoil/atoms';
 import { Logo } from './Logo';
 
 export const TransitionLayout = ({
@@ -30,12 +24,7 @@ export const TransitionLayout = ({
 
   const isTransitionPageToPage = useRef(false);
 
-  // const [onAnimationStartTransitionSound] = useSound(
-  //   '/sounds/page-transition-enter.wav'
-  // );
-  const [onAnimationExitTransitionSound] = useSound(
-    '/sounds/page-transition-exit.mp3'
-  );
+  const { onAnimationExitTransitionSound } = useSoundsContext();
 
   const { pathname } = useRouter();
 

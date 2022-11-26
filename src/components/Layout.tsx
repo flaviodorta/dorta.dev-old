@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useRecoilState } from 'recoil';
-import { cursorVariantAtom } from '../recoil/atoms';
+import {
+  cursorVariantAtom,
+  // shouldStartBackgroundSoundAtom,
+} from '../recoil/atoms';
 import {
   cursorStyleVariants,
   cursorVariants,
@@ -9,6 +12,7 @@ import {
 } from '../helpers/variants';
 import { isMobile } from 'react-device-detect';
 import { TransitionLayout } from './Transition';
+import { useSoundsContext } from '../context/SoundsContext';
 
 interface Props {
   children: React.ReactNode;
@@ -19,7 +23,16 @@ export const Layout = ({ children }: Props) => {
     x: 0,
     y: 0,
   });
+
   const [cursorVariant, setCursorVariant] = useRecoilState(cursorVariantAtom);
+
+  // const [shouldStartBackgroundSound] = useRecoilState(
+  //   shouldStartBackgroundSoundAtom
+  // );
+
+  // const { backgroundSoundPlay } = useSoundsContext();
+
+  // if (shouldStartBackgroundSound) backgroundSoundPlay();
 
   const layoutRef = useRef<HTMLDivElement>(null);
 
@@ -30,6 +43,7 @@ export const Layout = ({ children }: Props) => {
         y: e.clientY,
       });
     };
+
     window.addEventListener('mousemove', mouseMove);
   }, []);
 
@@ -39,7 +53,7 @@ export const Layout = ({ children }: Props) => {
         <div
           ref={layoutRef}
           onMouseEnter={() => setCursorVariant('default')}
-          className='cursor-none flex flex-col justify-between max-h-full h-screen px-5 pb-4 md:px-6 md:pb-10 overflow-hidden'
+          className='cursor-none max-h-full h-screen  overflow-hidden'
         >
           {/* cursor movement */}
           <motion.div

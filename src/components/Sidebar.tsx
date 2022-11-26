@@ -9,6 +9,7 @@ import {
 } from '../helpers/variants';
 import Link from 'next/link';
 import { transitionActions } from '../recoil/actions';
+import { useSoundsContext } from '../context/SoundsContext';
 
 interface MenuItemProps {
   isMenuOpen: boolean;
@@ -20,8 +21,8 @@ const MenuItem = ({ isMenuOpen, custom, linkName }: MenuItemProps) => {
   const [_, setCursorVariant] = useRecoilState(cursorVariantAtom);
   const [__, setTransitionState] = useRecoilState(transitionAtom);
 
-  const [hoverMenuOptionSoundPlay] = useSound('/sounds/hover-menu-option.wav');
-  // const [clickMenuOptionSoundPlay] = useSound('/sounds/click-menu-option.wav');
+  const { hoverMenuOptionSoundPlay, clickMenuOptionSoundPlay } =
+    useSoundsContext();
 
   const onMouseEnterMenuOption = () => {
     hoverMenuOptionSoundPlay();
