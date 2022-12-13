@@ -91,8 +91,6 @@ export const useTypewriter = ({
     []
   );
 
-  console.log(isInitialDelay);
-
   const handleTyping = useCallback(() => {
     const indexText = countText % texts.length;
     const textArr = turnTextCharInReactElement(texts[indexText], '&');
@@ -105,7 +103,6 @@ export const useTypewriter = ({
 
       (async function () {
         await wait(initialDelay);
-        console.log('cu');
         dispatch({ type: 'IS_INITIAL_DELAY' });
       })();
     } else {
@@ -147,7 +144,6 @@ export const useTypewriter = ({
 
   useEffect(() => {
     let typing;
-    console.log(firstRun.current);
     if (!firstRun.current) {
       typing = setTimeout(handleTyping, speed);
     }

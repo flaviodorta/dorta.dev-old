@@ -160,6 +160,11 @@
   dependencies:
     "glob" "7.1.7"
 
+"@next/font@^13.0.5":
+  "integrity" "sha512-NrP4B8pxwerrkkuG/m7MQv0ks89Kk4Lc0kzbiRaYX+Xb0coDaw+I9T+g42aOHf8j8ta1vtKqb5XE1+troZ4CoQ=="
+  "resolved" "https://registry.npmjs.org/@next/font/-/font-13.0.5.tgz"
+  "version" "13.0.5"
+
 "@next/swc-linux-x64-gnu@12.2.5":
   "integrity" "sha512-0szyAo8jMCClkjNK0hknjhmAngUppoRekW6OAezbEYwHXN/VNtsXbfzgYOqjKWxEx3OoAzrT3jLwAF0HdX2MEw=="
   "resolved" "https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-12.2.5.tgz"

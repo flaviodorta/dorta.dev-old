@@ -86,7 +86,7 @@ interface NavigationProps {
 }
 
 const Navigation = ({ isMenuOpen }: NavigationProps) => {
-  const linksName = ['works', 'services', 'about', 'contact'];
+  const linksName = ['works', 'about', 'contact'];
 
   return (
     <ul className='sidebar--list'>

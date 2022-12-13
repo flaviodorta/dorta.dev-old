@@ -3,10 +3,7 @@ import { useEffect, useState } from 'react';
 import { useToggle } from '../hooks/useToggle';
 import { useRecoilState } from 'recoil';
 import { randomIntegerInterval } from '../helpers/functions';
-import {
-  cursorVariantAtom,
-  transitionAtom,
-} from '../recoil/atoms';
+import { cursorVariantAtom, transitionAtom } from '../recoil/atoms';
 import {
   introTransitionLayerLoadingToButton,
   introEnterButtonText,
@@ -34,7 +31,7 @@ export const Intro = () => {
   const onClickEnterButton = () => {
     setTimeout(
       () => setTransitionState(transitionActions.startTransition()),
-      500
+      100
     );
   };
 

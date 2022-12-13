@@ -227,7 +227,7 @@ export const socialIconContainerVariants: Variants = {
 export const soundLabelVariants: Variants = {
   hidden: {
     x: 48,
-    y: 12,
+    y: 16,
     opacity: 0,
     transition: {
       type: 'spring',
@@ -237,7 +237,7 @@ export const soundLabelVariants: Variants = {
   },
   visible: {
     x: 56,
-    y: 12,
+    y: 16,
     opacity: 1,
     transition: {
       type: 'spring',

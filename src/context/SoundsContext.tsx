@@ -16,6 +16,7 @@ interface ISounds {
   hoverSocialIconsIconSoundPlay: PlayFunction | null;
   hoverSocialIconSoundPlay: PlayFunction | null;
   clickSocialIconSoundPlay: PlayFunction | null;
+  backgroundSoundPlay: PlayFunction | null;
 }
 
 const initialValue: ISounds = {
@@ -32,6 +33,7 @@ const initialValue: ISounds = {
   hoverSocialIconsIconSoundPlay: null,
   hoverSocialIconSoundPlay: null,
   clickSocialIconSoundPlay: null,
+  backgroundSoundPlay: null,
 };
 
 const SoundsContext = createContext<ISounds>(initialValue);
@@ -91,6 +93,10 @@ export function SoundsProvider({ children }: { children: React.ReactNode }) {
     volume: 0.1,
   });
 
+  const [backgroundSoundPlay] = useSound('/sounds/click-social-icon.wav', {
+    volume: 0.1,
+  });
+
   const sounds: ISounds = {
     onAnimationExitTransitionSound,
     hoverMenuOptionSoundPlay,
@@ -105,6 +111,7 @@ export function SoundsProvider({ children }: { children: React.ReactNode }) {
     hoverSocialIconsIconSoundPlay,
     hoverSocialIconSoundPlay,
     clickSocialIconSoundPlay,
+    backgroundSoundPlay,
   };
 
   return (

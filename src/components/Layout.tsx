@@ -13,10 +13,31 @@ import {
 import { isMobile } from 'react-device-detect';
 import { TransitionLayout } from './Transition';
 import { useSoundsContext } from '../context/SoundsContext';
+// import localFont from '@next/font/local';
 
 interface Props {
   children: React.ReactNode;
 }
+
+// const gotham = localFont({
+//   src: [
+//     {
+//       path: '/fonts/gotham/GothamBold.ttf',
+//       weight: '700',
+//       style: 'normal',
+//     },
+//     {
+//       path: '/fonts/gotham/GothamMedium.ttf',
+//       weight: '500',
+//       style: 'normal',
+//     },
+//     {
+//       path: '/fonts/gotham/GothamLight.ttf',
+//       weight: '400',
+//       style: 'normal',
+//     },
+//   ],
+// });
 
 export const Layout = ({ children }: Props) => {
   const [mousePosition, setMousePosition] = useState<MousePosition>({
@@ -48,7 +69,7 @@ export const Layout = ({ children }: Props) => {
   }, []);
 
   return (
-    <div className='text-white bg-layout-2'>
+    <div className={`font-g text-white bg-layout-2`}>
       <TransitionLayout>
         <div
           ref={layoutRef}

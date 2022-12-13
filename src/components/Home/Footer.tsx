@@ -1,7 +1,6 @@
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { useRef } from 'react';
 import { useToggle } from '../../hooks/useToggle';
-import useSound from 'use-sound';
 import { useRecoilState } from 'recoil';
 import { cursorVariantAtom, soundAtom } from '../../recoil/atoms';
 import {
@@ -14,6 +13,7 @@ import GitHub from '../icons/Github';
 import LinkedIn from '../icons/Linkedin';
 import Instagram from '../icons/Instagram';
 import { useSoundsContext } from '../../context/SoundsContext';
+import { SoundIcon } from '../SoundIcon';
 
 export const Footer = () => {
   const [sound, setSound] = useRecoilState(soundAtom);
@@ -93,22 +93,19 @@ export const Footer = () => {
       variants={footerIconsVariants}
       initial='initial'
       animate='animate'
-      className='flex justify-between'
+      className='flex items-center justify-between'
     >
-      <div className='relative'>
+      <div className='relative flex flex-col justify-center'>
         {/* sound icon */}
         <div
           ref={soundIconRef}
-          className={`w-10 h-[90px] overflow-hidden z-[41] relative -bottom-2 md:-bottom-8 flex items-center justify-center
-        before:content-["aaaaaaaaaaa"] -before:top-[42px] before:left-0 before:text-4xl ${
-          sound.isPlay ? 'before:decoration-wavy' : 'before:decoration-solid'
-        }  before:decoration-white before:text-transparent before:underline
-        before:animate-wave
-        `}
           onMouseEnter={onMouseEnterSoundIcon}
           onMouseLeave={onMouseLeaveSoundIcon}
           onClick={toggleSound}
-        />
+        >
+          <SoundIcon isPlay={sound.isPlay} />
+        </div>
+
         <AnimatePresence>
           {soundLabel && (
             <motion.div
@@ -116,13 +113,14 @@ export const Footer = () => {
               initial='hidden'
               animate='visible'
               exit='hidden'
-              className='hidden md:block absolute whitespace-nowrap font-share-tech font-white font-thin'
+              className='hidden md:block left-6 md:absolute whitespace-nowrap font-share-tech font-white font-thin'
             >
               sound {sound.isPlay ? 'off' : 'on'}
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
       <div className='w-fit h-[80px] z-40 flex items-end justify-end'>
         <div className='flex flex-col gap-4 justify-end items-center bottom'>
           <AnimatePresence>
@@ -176,7 +174,7 @@ export const Footer = () => {
             )}
           </AnimatePresence>
 
-          <div className='group relative bottom-2 md:-bottom-4 mt-5 md:mt-0'>
+          <div className='group relative bottom-2 mt-5 md:mt-0'>
             <div
               ref={openSocialsIconsIconRef}
               className='md:w-14 md:h-9 flex items-end justify-center group-hover:bg-transparent'
