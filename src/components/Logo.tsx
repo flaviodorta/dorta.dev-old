@@ -11,7 +11,11 @@ export const Logo = ({ className }: { className?: string }) => {
       animate='animate'
       // className={`relative select-none w-[180px] h-[60px] md:w-[240px] md:h-[80px] ${className}`}
     >
-      <div className='text-white text-3xl font-medium leading-3 tracking-widest'>
+      <div
+        className={`text-white ${
+          className ? className : 'text-3xl'
+        } font-medium leading-3 tracking-widest`}
+      >
         <span className='text-primary'>{'{'}</span>dorta
         <span className='text-primary'>.</span>dev
         <span className='text-primary'>{'}'}</span>

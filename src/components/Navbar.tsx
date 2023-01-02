@@ -71,11 +71,11 @@ export const Navbar = () => {
       className='flex justify-between items-center text-white w-full'
     >
       <div
-        className='relative select-none w-[120px] h-[30px] md:w-[160px] md:h-[40px]'
+        // className='relative select-none w-[120px] h-[30px] md:w-[160px] md:h-[40px]'
         onMouseEnter={onMouseEnterLogo}
         onMouseLeave={onMouseLeaveLogo}
       >
-        <Logo />
+        <Logo className='text-xl' />
       </div>
 
       {/* menu burger icon */}
