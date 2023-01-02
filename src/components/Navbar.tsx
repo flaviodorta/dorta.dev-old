@@ -7,9 +7,9 @@ import { useRecoilState } from 'recoil';
 import { cursorVariantAtom } from '../recoil/atoms';
 
 import Image from 'next/image';
-import Logo from '../../public/logo.svg';
 import { Sidebar } from './Sidebar';
 import { useSoundsContext } from '../context/SoundsContext';
+import { Logo } from './Logo';
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useToggle(false);
@@ -75,12 +75,7 @@ export const Navbar = () => {
         onMouseEnter={onMouseEnterLogo}
         onMouseLeave={onMouseLeaveLogo}
       >
-        <Image
-          src={Logo}
-          className='h-full w-[120px] sm:h-64'
-          layout='fill'
-          alt='Logo'
-        />
+        <Logo />
       </div>
 
       {/* menu burger icon */}

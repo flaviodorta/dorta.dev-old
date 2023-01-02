@@ -64,7 +64,7 @@ export const Intro = () => {
   return (
     <AnimatePresence>
       <div className='h-full w-full flex items-center justify-center'>
-        <div className='flex flex-col space-y-4 items-center justify-center xl:-translate-x-12 xl:-translate-y-12 2xl:-translate-x-16 2xl:-translate-y-16'>
+        <div className='relative bottom-24 flex flex-col items-center justify-between gap-16'>
           <Logo />
           <div
             className={`relative w-[100px] h-[18px] flex items-center bg-none justify-start border-primary border-[1px] outline-none select-none`}
