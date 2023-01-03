@@ -39,7 +39,7 @@
   }
 
   .social--icon {
-    @apply w-6 h-6 relative z-50 -bottom-4 brightness-50 group-hover:scale-125 group-active:scale-75 group-hover:brightness-90 fill-white group-hover:fill-primary duration-300;
+    @apply w-6 h-6 relative z-50 brightness-50 group-hover:scale-125 group-active:scale-75 group-hover:brightness-90 fill-white group-hover:fill-primary duration-300;
   }
 
   .container {

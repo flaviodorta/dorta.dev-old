@@ -174,7 +174,7 @@ export const Footer = () => {
             )}
           </AnimatePresence>
 
-          <div className='group relative bottom-2 mt-5 md:mt-0'>
+          <div className='group relative bottom-2 mt-28 md:mt-0'>
             <div
               ref={openSocialsIconsIconRef}
               className='md:w-14 md:h-9 flex items-end justify-center group-hover:bg-transparent'
