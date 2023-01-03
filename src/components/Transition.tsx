@@ -78,7 +78,7 @@ export const TransitionLayout = ({
                     <span className='text-primary'>.</span>
                   </motion.h1>
                 ) : (
-                  <Logo className='-translate-y-6 xl:-translate-x-12 xl:-translate-y-20 2xl:-translate-x-16 2xl:-translate-y-20' />
+                  <Logo className='-translate-y-6 text-3xl xl:-translate-y-20 2xl:-translate-y-20' />
                 )}
               </motion.div>
               <motion.div
